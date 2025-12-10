@@ -71,7 +71,7 @@ function crearBBDD($basedatos){
 
 function crearTablas()
 {
-    $conexion = getConexion();
+    $conexion = getConexionPDO();
     
     $aplicacionOkey = false;
     $loginOkey = false;
@@ -109,7 +109,7 @@ function crearTablas()
 
 function IniciarSesion($usuario, $password)
 {
-    $conexion = getConexion();
+    $conexion = getConexionPDO();
     
     // Consulta preparada para evitar SQL injection
     $consulta = "SELECT passwd FROM logins WHERE usuario = ?;";
@@ -146,7 +146,7 @@ function IniciarSesion($usuario, $password)
 
 function registrarUsuario($usuario, $password)
 {
-    $conexion = getConexion();
+    $conexion = getConexionPDO();
     
     // Consulta preparada para insertar usuario
     $insertusuarios = "INSERT INTO logins (usuario, passwd) VALUES (?, ?);";
@@ -176,7 +176,7 @@ function registrarUsuario($usuario, $password)
 
 function insertarAplicacion($nombre_aplicacion, $descripcion)
 {
-    $conexion = getConexion();
+    $conexion = getConexionPDO();
     
     // Consulta preparada para insertar aplicación
     $insertlibros = "INSERT INTO aplicaciones (nombre_aplicacion, descripcion)
@@ -207,7 +207,7 @@ function insertarAplicacion($nombre_aplicacion, $descripcion)
 
 function getAplicaciones()
 {
-    $conexion = getConexion();
+    $conexion = getConexionPDO();
     
     // Selecciona todas las aplicaciones
     $selectlibro = "SELECT * FROM aplicaciones;";
@@ -228,7 +228,7 @@ function getAplicaciones()
 
 function borrarAplicaciones($id)
 {
-    $conexion = getConexion();
+    $conexion = getConexionPDO();
     
     // Consulta preparada para eliminar aplicación
     $deleteaplicacion = "DELETE FROM aplicaciones WHERE id = ?;";
@@ -246,7 +246,7 @@ function borrarAplicaciones($id)
 }
 // Comprobar login
 function comprobarLogin($usuario, $contrasena_hash) {
-    $conn = getConnection();
+    $conn = getConnectionPDO();
     $sql  = "SELECT * FROM login WHERE usuario = ? AND contrasena_hash = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $usuario, $contrasena_hash);
