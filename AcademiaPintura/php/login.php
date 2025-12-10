@@ -9,9 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 }
 
 $usuario = $_POST["usuario"] ?? "";
-$passwd  = $_POST["passwd"] ?? "";
+$contrasena_hash  = $_POST["contrasena_hash"] ?? "";
 
-if (comprobarLogin($usuario, $passwd)) {
+if (comprobarLogin($usuario, $contrasena_hash)) {
     $_SESSION["usuario"] = $usuario;
     header("Location: indice.php");
     exit;
