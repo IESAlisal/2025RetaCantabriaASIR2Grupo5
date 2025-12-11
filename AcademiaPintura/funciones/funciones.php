@@ -256,43 +256,6 @@ function crearTablas()
     return ($tablasCreadas === $totalTablas) ? 1 : 0;
 }
 
-/*unnciIniciarSesion($usuario, $password)
-{
-    $conexion = getConexionPDO();
-    
-    // Consulta preparada para evitar SQL injection
-    $consulta = "SELECT passwd FROM logins WHERE usuario = ?;";
-    $stmt = $conexion->prepare($consulta);
-
-    if (!$stmt) {
-        $conexion->close();
-        return 1;
-    }
-
-    // Vincula el parámetro usuario
-    $stmt->bind_param("s", $usuario);
-    $stmt->execute();
-
-    $res = $stmt->get_result();
-
-    // Si el usuario no existe
-    if ($res->num_rows === 0) {
-        $stmt->close();
-        $conexion->close();
-        return false;
-    }
-
-    // Obtiene la contraseña hasheada de la BD
-    $row = $res->fetch_assoc();
-    $passwordBD = $row['passwd'];
-    $stmt->close();
-    $conexion->close(); 
-
-    // Compara la contraseña ingresada (hasheada) con la de la BD
-    return md5($password) === $passwordBD;
-}
-*/
-
 function registrarUsuario($usuario, $contrasena_hash)
 {
     $conexion = getConexionPDO();
