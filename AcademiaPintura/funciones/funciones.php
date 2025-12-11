@@ -70,41 +70,101 @@ function crearBBDD($basedatos){
 
 
 function crearTablas()
+
 {
-    $conexion = getConexionPDO();
     
-    $aplicacionOkey = false;
+    $conexion = getConexionPDO();
+
+    
+    $academiaOkey = false;
     $loginOkey = false;
 
-    // Crea tabla de aplicaciones con campos: id, nombre, descripción
-    $aplicaciones = "CREATE TABLE IF NOT EXISTS `aplicaciones` (
-        `id` int(11) NOT NULL AUTO_INCREMENT,
-        `nombre_aplicacion` varchar(50) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-        `descripcion` varchar(300) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-        PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+    
+    // Crea tabla de rol con campos: codigo_rol (PK), nombre_rol
+    $rol = "CREATE TABLE IF NOT EXISTS `rol` (
+             `codigo_rol` VARCHAR(10) PRIMARY KEY CHECK (`codigo_rol` IN ('ROL-PRO', 'ROL-ALU', 'ROL-ADM')),
+             `nombre_rol` VARCHAR(20) NOT NULL UNIQUE CHECK (`nombre_rol` IN ('PROFESOR', 'ALUMNO', 'ADMIN'))
+             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
 
-    if ($conexion ->query($aplicaciones)) {
+    if ($conexion ->query($rol)) {
         $aplicacionOkey = true;
     }
-    
-    // Crea tabla de logins con campos: usuario (PK), contraseña
-    $login = "CREATE TABLE IF NOT EXISTS `logins` (
-        `usuario` VARCHAR(50) NOT NULL PRIMARY KEY,
-        `passwd` VARCHAR(255) NOT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
-    
-    if ($conexion ->query($login)) {
+
+    // Crea tabla de usuarios con varios campos y restricciones
+    $usuarios = "CREATE TABLE IF NOT EXISTS `usuarios` (
+                 `id_usuario` VARCHAR(20) PRIMARY KEY,
+                 `codigo_usuario` VARCHAR(20) UNIQUE NOT NULL CHECK (`codigo_usuario` LIKE 'USU-%'),
+                 `nombre` VARCHAR(100) NOT NULL,
+                 `apellido` VARCHAR(100) NOT NULL,
+                 `correo` VARCHAR(100) UNIQUE NOT NULL CHECK (`correo` LIKE '%@%.%'),
+                 `telefono` VARCHAR(15) NOT NULL CHECK (`telefono` REGEXP '^[0-9]{6,15}$'),
+                 `fecha_nacimiento` DATE,
+                 `direccion` TEXT,
+                 `estado` ENUM('Activo', 'Inactivo', 'Suspendido') DEFAULT 'Activo',
+                 `rol_codigo` VARCHAR(10) NOT NULL,
+                 `fecha_registro` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                 FOREIGN KEY (`rol_codigo`) REFERENCES `rol`(`codigo_rol`),
+                 CONSTRAINT chk_id_formato CHECK (`id_usuario` REGEXP '^[A-Z0-9-]+$')
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+
+    if ($conexion ->query($usuarios)) {
         $loginOkey = true;
     
     if ($aplicacionOkey && $loginOkey) {
+    }
+    /*if ($aplicacionOkey && $loginOkey) {
         $conexion->close();
         return 1; // Ambas tablas creadas
     } else {
         $conexion->close();
         return 0; // Falló crear alguna tabla
+    }*/
+    
+    $login = "CREATE TABLE IF NOT EXISTS `login` (
+             `id_login` INT AUTO_INCREMENT PRIMARY KEY,
+             `id_usuario` VARCHAR(20) NOT NULL UNIQUE,
+             `usuario` VARCHAR(50) UNIQUE NOT NULL,
+             `contrasena_hash` VARCHAR(255) NOT NULL,
+             `fecha_creacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+             `ultimo_acceso` TIMESTAMP NULL,
+             `estado` ENUM('Activo', 'Inactivo', 'Bloqueado') DEFAULT 'Activo',
+             FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id_usuario`) ON DELETE CASCADE
+             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+
+    if ($conexion ->query($login)) {
+        $loginOkey = true;
     }
 }}
+
+    $datos_bancarios = "CREATE TABLE IF NOT EXISTS `datos_bancarios` (
+                         `id_dato_bancario` INT AUTO_INCREMENT PRIMARY KEY,
+                         `id_usuario` VARCHAR(20) NOT NULL UNIQUE,
+                         `nombre_titular` VARBINARY(255) NOT NULL,
+                         `numero_cuenta` VARBINARY(255) NOT NULL,
+                         `tipo_cuenta` ENUM('Ahorros', 'Corriente', 'Nómina') NOT NULL,
+                         `nombre_banco` VARCHAR(100) NOT NULL,
+                         `fecha_registro` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                         `ultima_modificacion` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                         `intentos_acceso_fallidos` INT DEFAULT 0,
+                         FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id_usuario`) ON DELETE CASCADE
+                         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+
+    if ($conexion ->query($datos_bancarios)) {
+        $loginOkey = true;
+    }
+
+    $profesor = "CREATE TABLE IF NOT EXISTS `profesor` (
+                 `id_profesor` INT AUTO_INCREMENT PRIMARY KEY,
+                 `id_usuario` VARCHAR(20) NOT NULL UNIQUE,
+                 `fecha_contratacion` DATE NOT NULL,
+                 `tipo_contrato` ENUM('Tiempo Completo', 'Medio Tiempo', 'Por Horas') DEFAULT 'Tiempo Completo',
+                 `salario` DECIMAL(10,2),
+                 FOREIGN KEY (`id_usuario`) REFERENCES `usuarios`(`id_usuario`) ON DELETE CASCADE
+                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+
+    if ($conexion ->query($profesor)) {
+        $loginOkey = true;
+    }
 
 
 /*unnciIniciarSesion($usuario, $password)
@@ -178,7 +238,7 @@ function insertarAsignatura($nombre_asignatura,$descripcion)
     $conexion = getConexionPDO();
     
     // Consulta preparada para insertar aplicación
-    $insertAsignaturas = "INSERT INTO asignaturas (?, ?)
+    $insertAsignaturas = "INSERT INTO asignaturas (nombre_asignatura, descripcion)
                      VALUES (?, ?);";
     $stmt = $conexion->prepare($insertAsignaturas);
 
