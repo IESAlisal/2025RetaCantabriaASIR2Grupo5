@@ -107,7 +107,7 @@ function crearTablas()
 }}
 
 
-function IniciarSesion($usuario, $password)
+/*unnciIniciarSesion($usuario, $password)
 {
     $conexion = getConexionPDO();
     
@@ -142,14 +142,14 @@ function IniciarSesion($usuario, $password)
     // Compara la contraseña ingresada (hasheada) con la de la BD
     return md5($password) === $passwordBD;
 }
+*/
 
-
-function registrarUsuario($usuario, $password)
+function registrarUsuario($usuario, $contrasena_hash)
 {
     $conexion = getConexionPDO();
     
     // Consulta preparada para insertar usuario
-    $insertusuarios = "INSERT INTO logins (usuario, passwd) VALUES (?, ?);";
+    $insertusuarios = "INSERT INTO logins (usuario, contrasena_hash) VALUES (?, ?);";
     $stmt = $conexion->prepare($insertusuarios);
 
     if (!$stmt) {
@@ -173,13 +173,12 @@ function registrarUsuario($usuario, $password)
     return $res;
 }
 
-
-function insertarAplicacion($nombre_aplicacion, $descripcion)
+function insertarAsignatura($nombre_asignatura,$descripcion)
 {
     $conexion = getConexionPDO();
     
     // Consulta preparada para insertar aplicación
-    $insertlibros = "INSERT INTO aplicaciones (nombre_aplicacion, descripcion)
+    $insertlibros = "INSERT INTO asignaturas (nombre_asignatura,descripcion)
                      VALUES (?, ?);";
     $stmt = $conexion->prepare($insertlibros);
 
@@ -189,7 +188,7 @@ function insertarAplicacion($nombre_aplicacion, $descripcion)
     }
     
     // Vincula los parámetros
-    $stmt->bind_param("ss", $nombre_aplicacion, $descripcion);
+    $stmt->bind_param("ss", $nombre_asignatura, $descripcion);
     $stmt->execute();
 
     // Verifica si se insertó correctamente
@@ -205,24 +204,24 @@ function insertarAplicacion($nombre_aplicacion, $descripcion)
 }
 
 
-function getAplicaciones()
+function getAsignaturas()
 {
     $conexion = getConexionPDO();
     
     // Selecciona todas las aplicaciones
-    $selectlibro = "SELECT * FROM aplicaciones;";
+    $selectlibro = "SELECT * FROM nombre_asignatura;";
 
     $res = $conexion->query($selectlibro);
 
     // Array para almacenar los resultados
-    $aplicaciones = [];
+    $nombre_asignatura= [];
 
     // Itera sobre los resultados y los convierte en objetos
     while ($aplicacion = $res->fetch_object()) {
-        $aplicaciones[] = $aplicacion;
+        $asignaturas[] = $nombre_asignatura;
     }
     
-    return $aplicaciones;
+    return $asignaturas;
 }
 
 
@@ -231,9 +230,9 @@ function borrarAplicaciones($id)
     $conexion = getConexionPDO();
     
     // Consulta preparada para eliminar aplicación
-    $deleteaplicacion = "DELETE FROM aplicaciones WHERE id = ?;";
+    $deleteaplicacion = "DELETE FROM asignaturas WHERE id = ?;";
     
-    $stmt = $conexion->prepare($deleteaplicacion);
+    $stmt = $conexion->prepare($deletenombre_asignatura);
 
     if (!$stmt) {
         $conexion->close();
