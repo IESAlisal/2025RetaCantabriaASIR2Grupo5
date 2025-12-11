@@ -1,7 +1,7 @@
 <?php
 
 // Incluir archivo de constantes con configuración de BD
-include_once '..\php\constantes\constantes.php';
+include_once 'constantes.php';
 
 
 function getConexionPDO()
@@ -21,27 +21,30 @@ function getConexionPDO()
 }
 
 
-function getConexion_sin_bbdd()
+function getConexion_sin_bbdd_PDO()
 {
-    $conexion = new mysqli(HOST, USERNAME, PASSWORD);
-    $conexion->set_charset("utf8");
+    try {
+        $options = array(
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"
+        );
 
-    $error = $conexion->connect_errno;
+        $dsn = 'mysql:host=' . HOST . ';charset=utf8mb4';
 
-    if ($conexion->connect_errno) {
-        print "<p> Se ha producido un error con la conexion con la base de datos: $conexion -> $error. </p>";
-        exit();
-    } else {
-        return $conexion;
+        $pdo = new PDO($dsn, USERNAME, PASSWORD, $options);
+        return $pdo;
+    } catch (PDOException $ex) {
+        echo "<p>Se ha producido un error con la conexión a la base de datos: " . htmlspecialchars($ex->getMessage()) . "</p>";
+        return null;
     }
 }
 
 
 function crearBBDD($basedatos){
     try {
-        $conexion = getConexionPDO();
+        $conexion = getConexion_sin_bbdd_PDO();
         
-        $sql = "SELECT schema_name FROM information_schema.schemata WHERE schema_name = :basedatos";
+        $sql = "SELECT schema_name FROM information_schema.schemata WHERE schema_name = '$basedatos'";
         $stm = $conexion->prepare($sql);
         $stm->bindParam(':basedatos', $basedatos);
         $stm->execute();

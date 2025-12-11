@@ -1,7 +1,7 @@
 <?php
 // login.php
 session_start();
-require_once "funciones.php";
+require_once "../funciones/funciones.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: index.php");
