@@ -1,7 +1,7 @@
 <?php
 
 // Incluir archivo de constantes con configuración de BD
-include_once 'constantes.php';
+include_once '..\php\constantes\constantes.php';
 
 
 function getConexionPDO()
@@ -286,7 +286,7 @@ function registrarUsuario($usuario, $contrasena_hash)
 }
 
 function insertarAsignatura($nombre_asignatura,$descripcion)
-{g
+{
     $conexion = getConexionPDO();
     
     // Consulta preparada para insertar aplicación
