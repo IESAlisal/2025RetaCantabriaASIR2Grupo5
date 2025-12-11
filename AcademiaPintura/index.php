@@ -25,7 +25,7 @@
         include_once './funciones/funciones.php';
         
         // Nombre de la base de datos a crear
-        $basedatos = "academia_pintura";
+        $basedatos = DATABASE;
         // Alternativa: $basedatos = DATABASE; (usar la constante del archivo constantes.php)
         
         // Intenta crear la BD
