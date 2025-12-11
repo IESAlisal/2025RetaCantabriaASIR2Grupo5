@@ -178,9 +178,9 @@ function insertarAsignatura($nombre_asignatura,$descripcion)
     $conexion = getConexionPDO();
     
     // Consulta preparada para insertar aplicación
-    $insertlibros = "INSERT INTO asignaturas (nombre_asignatura,descripcion)
+    $insertAsignaturas = "INSERT INTO asignaturas (?, ?)
                      VALUES (?, ?);";
-    $stmt = $conexion->prepare($insertlibros);
+    $stmt = $conexion->prepare($insertAsignaturas);
 
     if (!$stmt) {
         $conexion->close();
@@ -225,12 +225,12 @@ function getAsignaturas()
 }
 
 
-function borrarAplicaciones($id)
+function borrarAsignaturas($id)
 {
     $conexion = getConexionPDO();
     
     // Consulta preparada para eliminar aplicación
-    $deleteaplicacion = "DELETE FROM asignaturas WHERE id = ?;";
+    $deletenombre_asignatura = "DELETE FROM asignaturas WHERE id = ?;";
     
     $stmt = $conexion->prepare($deletenombre_asignatura);
 
