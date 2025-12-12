@@ -1,7 +1,9 @@
 <?php
 
 // Incluir archivo de constantes con configuración de BD
-include_once 'constantes.php';
+if (!defined('HOST')) {
+    require_once dirname(__FILE__) . '/../php/constantes/constantes.php';
+}
 
 
 function getConexionPDO()
@@ -39,32 +41,35 @@ function getConexion_sin_bbdd_PDO()
     }
 }
 
-
 function crearBBDD($basedatos){
     try {
         $conexion = getConexion_sin_bbdd_PDO();
         
-        $sql = "SELECT schema_name FROM information_schema.schemata WHERE schema_name = '$basedatos'";
+        if (!$conexion) {
+            return 1;
+        }
+        
+        $sql = "SELECT schema_name FROM information_schema.schemata WHERE schema_name = :basedatos";
         $stm = $conexion->prepare($sql);
-        $stm->bindParam(':basedatos', $basedatos);
-        $stm->execute();
+        $stm->execute([':basedatos' => $basedatos]);
         
         $existe = $stm->fetch(PDO::FETCH_ASSOC);
         
         if (!$existe) {
             // Crear la base de datos
-            $sql = "CREATE DATABASE $basedatos";
-            if ($conexion->exec($sql) !== false) {
+            $sql = "CREATE DATABASE `" . $basedatos . "`";
+            try {
+                $conexion->exec($sql);
                 echo "Base de datos $basedatos creada en MySQL por Objetos ";
                 echo "<br>";
-            } else {
-                echo "Error al ejecutar consulta: " . $conexion->errorInfo();
-                $existe = 1;
+                return 0;
+            } catch (PDOException $ex) {
+                echo "Error al ejecutar consulta: " . $ex->getMessage();
+                return 1;
             }
-            print_r("Estoy aqui0");
         }
         
-        return $existe;
+        return 0;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
         return 1;
@@ -261,114 +266,213 @@ function crearTablas()
 
 function registrarUsuario($usuario, $contrasena_hash)
 {
-    $conexion = getConexionPDO();
-    
-    // Consulta preparada para insertar usuario
-    $insertusuarios = "INSERT INTO logins (usuario, contrasena_hash) VALUES (?, ?);";
-    $stmt = $conexion->prepare($insertusuarios);
-
-    if (!$stmt) {
-        $conexion->close();
+    try {
+        $conexion = getConexionPDO();
+        
+        if (!$conexion) {
+            return false;
+        }
+        
+        // Hashea la contraseña con MD5
+        $passMD5 = md5($contrasena_hash);
+        
+        // Consulta preparada para insertar usuario
+        $sql = "INSERT INTO `login` (`usuario`, `contrasena_hash`) VALUES (:usuario, :hash)";
+        $stmt = $conexion->prepare($sql);
+        
+        $stmt->execute([':usuario' => $usuario, ':hash' => $passMD5]);
+        
+        // Verifica si se insertó alguna fila
+        return $stmt->rowCount() > 0;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
         return false;
     }
-
-    // Hashea la contraseña con MD5
-    $passMD5 = md5($password);
-
-    // Vincula los parámetros
-    $stmt->bind_param("ss", $usuario, $passMD5);
-    $stmt->execute();
-
-    // Verifica si se insertó alguna fila
-    $res = $stmt->affected_rows > 0;
-    
-    $stmt->close();
-    $conexion->close();
-
-    return $res;
 }
 
-function insertarAsignatura($nombre_asignatura,$descripcion)
+function insertarAsignatura($nombre_asignatura, $descripcion)
 {
-    $conexion = getConexionPDO();
-    
-    // Consulta preparada para insertar aplicación
-    $insertAsignaturas = "INSERT INTO asignaturas (nombre_asignatura, descripcion)
-                     VALUES (?, ?);";
-    $stmt = $conexion->prepare($insertAsignaturas);
-
-    if (!$stmt) {
-        $conexion->close();
-        return 1;
-    }
-    
-    // Vincula los parámetros
-    $stmt->bind_param("ss", $nombre_asignatura, $descripcion);
-    $stmt->execute();
-
-    // Verifica si se insertó correctamente
-    if ($res = $stmt->affected_rows > 0) {
-        $stmt->close();
-        $conexion->close();
-        return 1; // Éxito
-    } else {
-        $stmt->close();
-        $conexion->close();
-        return 0; // Falló
+    try {
+        $conexion = getConexionPDO();
+        
+        if (!$conexion) {
+            return 0;
+        }
+        
+        // Consulta preparada para insertar asignatura
+        $sql = "INSERT INTO `asignaturas` (`nombre_asignatura`, `descripcion`) VALUES (:nombre, :descripcion)";
+        $stmt = $conexion->prepare($sql);
+        
+        $stmt->execute([':nombre' => $nombre_asignatura, ':descripcion' => $descripcion]);
+        
+        // Verifica si se insertó correctamente
+        return ($stmt->rowCount() > 0) ? 1 : 0;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return 0;
     }
 }
 
 
 function getAsignaturas()
 {
-    $conexion = getConexionPDO();
-    
-    // Selecciona todas las aplicaciones
-    $selectlibro = "SELECT * FROM nombre_asignatura;";
-
-    $res = $conexion->query($selectlibro);
-
-    // Array para almacenar los resultados
-    $nombre_asignatura= [];
-
-    // Itera sobre los resultados y los convierte en objetos
-    while ($aplicacion = $res->fetch_object()) {
-        $asignaturas[] = $nombre_asignatura;
+    try {
+        $conexion = getConexionPDO();
+        
+        if (!$conexion) {
+            return [];
+        }
+        
+        // Selecciona todas las asignaturas
+        $sql = "SELECT * FROM `asignaturas`";
+        $stmt = $conexion->query($sql);
+        
+        // Array para almacenar los resultados
+        $asignaturas = [];
+        
+        // Itera sobre los resultados y los convierte en objetos
+        while ($asignatura = $stmt->fetch(PDO::FETCH_OBJ)) {
+            $asignaturas[] = $asignatura;
+        }
+        
+        return $asignaturas;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return [];
     }
-    
-    return $asignaturas;
 }
 
 
 function borrarAsignaturas($id)
 {
-    $conexion = getConexionPDO();
-    
-    // Consulta preparada para eliminar aplicación
-    $deletenombre_asignatura = "DELETE FROM asignaturas WHERE id = ?;";
-    
-    $stmt = $conexion->prepare($deletenombre_asignatura);
-
-    if (!$stmt) {
-        $conexion->close();
-        return 1;
+    try {
+        $conexion = getConexionPDO();
+        
+        if (!$conexion) {
+            return 0;
+        }
+        
+        // Consulta preparada para eliminar asignatura
+        $sql = "DELETE FROM `asignaturas` WHERE `id_asignatura` = :id";
+        $stmt = $conexion->prepare($sql);
+        
+        $stmt->execute([':id' => $id]);
+        
+        return ($stmt->rowCount() > 0) ? 1 : 0;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return 0;
     }
-
-    // Vincula el parámetro ID
-    $stmt->bind_param("i", $id);
-    $res = $stmt->execute();
 }
 // Comprobar login
 function comprobarLogin($usuario, $contrasena_hash) {
-    $conn = getConnectionPDO();
-    $sql  = "SELECT * FROM login WHERE usuario = ? AND contrasena_hash = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $usuario, $contrasena_hash);
-    $stmt->execute();
-    $res = $stmt->get_result();
-    $ok  = ($res->num_rows === 1);
-    $stmt->close();
-    $conn->close();
-    return $ok;
+    try {
+        $conexion = getConexionPDO();
+        
+        if (!$conexion) {
+            return false;
+        }
+        
+        $sql = "SELECT * FROM `login` WHERE `usuario` = :usuario AND `contrasena_hash` = :hash";
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([':usuario' => $usuario, ':hash' => $contrasena_hash]);
+        
+        return ($stmt->rowCount() === 1);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+        return false;
+    }
+}
+
+// Registrar nuevo usuario
+function registroUsuario($usuario, $contrasena, $nombre, $apellido, $correo, $telefono, $rol)
+{
+    try {
+        $conexion = getConexionPDO();
+        
+        if (!$conexion) {
+            return ['success' => false, 'msg' => 'Error de conexión a la base de datos'];
+        }
+        
+        // Verificar que el usuario no existe
+        $sql_check = "SELECT `usuario` FROM `login` WHERE `usuario` = :usuario";
+        $stmt_check = $conexion->prepare($sql_check);
+        $stmt_check->execute([':usuario' => $usuario]);
+        
+        if ($stmt_check->rowCount() > 0) {
+            return ['success' => false, 'msg' => 'El usuario ya existe'];
+        }
+        
+        // Verificar que el correo no existe
+        $sql_email_check = "SELECT `correo` FROM `usuarios` WHERE `correo` = :correo";
+        $stmt_email = $conexion->prepare($sql_email_check);
+        $stmt_email->execute([':correo' => $correo]);
+        
+        if ($stmt_email->rowCount() > 0) {
+            return ['success' => false, 'msg' => 'El correo ya está registrado'];
+        }
+        
+        // Hashear la contraseña
+        $contrasena_hash = md5($contrasena);
+        
+        // Generar ID de usuario
+        $id_usuario = 'USU-' . strtoupper(substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 6));
+        $codigo_usuario = 'USU-' . strtoupper(substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 6));
+        
+        // Iniciar transacción
+        $conexion->beginTransaction();
+        
+        try {
+            // Insertar en tabla usuarios
+            $sql_usuarios = "INSERT INTO `usuarios` (`id_usuario`, `codigo_usuario`, `nombre`, `apellido`, `correo`, `telefono`, `rol_codigo`) 
+                            VALUES (:id_usuario, :codigo_usuario, :nombre, :apellido, :correo, :telefono, :rol)";
+            $stmt_usuarios = $conexion->prepare($sql_usuarios);
+            $stmt_usuarios->execute([
+                ':id_usuario' => $id_usuario,
+                ':codigo_usuario' => $codigo_usuario,
+                ':nombre' => $nombre,
+                ':apellido' => $apellido,
+                ':correo' => $correo,
+                ':telefono' => $telefono,
+                ':rol' => $rol
+            ]);
+            
+            // Insertar en tabla login
+            $sql_login = "INSERT INTO `login` (`id_usuario`, `usuario`, `contrasena_hash`) 
+                         VALUES (:id_usuario, :usuario, :hash)";
+            $stmt_login = $conexion->prepare($sql_login);
+            $stmt_login->execute([
+                ':id_usuario' => $id_usuario,
+                ':usuario' => $usuario,
+                ':hash' => $contrasena_hash
+            ]);
+            
+            // Si el rol es alumno, insertar en tabla alumno
+            if ($rol === 'ROL-ALU') {
+                $sql_alumno = "INSERT INTO `alumno` (`id_usuario`, `fecha_ingreso`) 
+                              VALUES (:id_usuario, NOW())";
+                $stmt_alumno = $conexion->prepare($sql_alumno);
+                $stmt_alumno->execute([':id_usuario' => $id_usuario]);
+            }
+            // Si el rol es profesor, insertar en tabla profesor
+            else if ($rol === 'ROL-PRO') {
+                $sql_profesor = "INSERT INTO `profesor` (`id_usuario`, `fecha_contratacion`) 
+                                VALUES (:id_usuario, NOW())";
+                $stmt_profesor = $conexion->prepare($sql_profesor);
+                $stmt_profesor->execute([':id_usuario' => $id_usuario]);
+            }
+            
+            // Confirmar transacción
+            $conexion->commit();
+            
+            return ['success' => true, 'msg' => 'Registro completado exitosamente'];
+        } catch (PDOException $e) {
+            $conexion->rollBack();
+            return ['success' => false, 'msg' => 'Error al registrar: ' . $e->getMessage()];
+        }
+        
+    } catch (PDOException $e) {
+        return ['success' => false, 'msg' => 'Error: ' . $e->getMessage()];
+    }
 }
 ?>
