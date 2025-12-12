@@ -128,3 +128,8 @@ CREATE TABLE IF NOT EXISTS `auditoria_login` (
     `fecha_hora` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `ip_address` VARCHAR(45)
 );
+
+INSERT INTO rol (codigo_rol, nombre_rol) VALUES
+('ROL-PRO', 'PROFESOR'),
+('ROL-ALU', 'ALUMNO'),
+('ROL-ADM', 'ADMIN');

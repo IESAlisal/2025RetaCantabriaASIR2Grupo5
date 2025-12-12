@@ -76,6 +76,48 @@ function crearBBDD($basedatos){
     }
 }
 
+function ensureDefaultRoles()
+{
+    try {
+        $conexion = getConexionPDO();
+        if (!$conexion) {
+            echo "<!-- Error: No hay conexión a BD en ensureDefaultRoles -->";
+            return false;
+        }
+
+        $roles = [
+            ['ROL-PRO', 'PROFESOR'],
+            ['ROL-ALU', 'ALUMNO'],
+            ['ROL-ADM', 'ADMIN']
+        ];
+
+        foreach ($roles as $r) {
+            try {
+                // Primero verificar si existe
+                $check_sql = "SELECT `codigo_rol` FROM `rol` WHERE `codigo_rol` = :codigo";
+                $check_stmt = $conexion->prepare($check_sql);
+                $check_stmt->execute([':codigo' => $r[0]]);
+                
+                if ($check_stmt->rowCount() === 0) {
+                    // No existe, insertar
+                    $insert_sql = "INSERT INTO `rol` (`codigo_rol`, `nombre_rol`) VALUES (:codigo, :nombre)";
+                    $insert_stmt = $conexion->prepare($insert_sql);
+                    $insert_stmt->execute([':codigo' => $r[0], ':nombre' => $r[1]]);
+                    echo "<!-- Rol " . $r[0] . " insertado -->";
+                }
+            } catch (PDOException $e) {
+                echo "<!-- Error insertando rol " . $r[0] . ": " . htmlspecialchars($e->getMessage()) . " -->";
+            }
+        }
+
+        return true;
+    } catch (PDOException $ex) {
+        echo "<!-- Advertencia: Error en ensureDefaultRoles: " . htmlspecialchars($ex->getMessage()) . " -->";
+        return false;
+    }
+}
+
+
 
 function crearTablas()
 {
@@ -92,6 +134,8 @@ function crearTablas()
 
     if ($conexion->query($rol)) {
         $tablasCreadas++;
+        // Sembrar roles por defecto si faltan
+        ensureDefaultRoles();
     }
 
     // Crea tabla de usuarios

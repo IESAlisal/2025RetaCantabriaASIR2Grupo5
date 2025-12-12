@@ -156,6 +156,7 @@
             // Intenta crear las tablas
             if(crearTablas() == 1){
                 // Las tablas se crearon exitosamente
+                ensureDefaultRoles();
                 echo '<script>
                     document.getElementById("loading").style.display = "none";
                     document.getElementById("content").style.display = "block";
@@ -164,6 +165,7 @@
         }
         else if ($bbdd == 1){
             // Si la BD ya existía (retorna 1)
+            ensureDefaultRoles();
             echo '<script>
                 document.getElementById("loading").style.display = "none";
                 document.getElementById("content").style.display = "block";
