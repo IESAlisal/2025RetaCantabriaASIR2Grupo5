@@ -64,6 +64,9 @@ if (!empty($errores)) {
     exit();
 }
 
+// Asegurar que los roles existen en BD antes de intentar insertar
+ensureDefaultRoles();
+
 // Registrar usuario
 $resultado = registroUsuario($usuario, $contrasena, $nombre, $apellido, $correo, $telefono, $rol);
 
