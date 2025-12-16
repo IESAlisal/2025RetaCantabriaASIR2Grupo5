@@ -124,9 +124,7 @@
             <button type="submit" class="login-btn">Iniciar Sesión</button>
         </form>
         
-        <div class="register-link">
-            ¿No tienes cuenta? <a href="../registro/registro.php">Regístrate aquí</a>
-        </div>
+      
     </div>
 </body>
 </html>

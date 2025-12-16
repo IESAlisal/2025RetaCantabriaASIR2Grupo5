@@ -111,10 +111,6 @@
 <body>
     <div class="navbar">
         <h1>🎨 Academia de Pintura</h1>
-        <div class="navbar-links">
-            <a href="php/login/login.php">Iniciar Sesión</a>
-            <a href="php/registro/registro.php">Registrarse</a>
-        </div>
     </div>
     
     <div class="container">
@@ -128,7 +124,6 @@
             <p>Accede a tu cuenta para continuar con tus actividades en la Academia de Pintura.</p>
             <div class="btn-group">
                 <a href="php/login/login.php" class="btn btn-primary">Iniciar Sesión</a>
-                <a href="php/registro/registro.php" class="btn btn-secondary">Crear Cuenta</a>
             </div>
         </div>
     </div>
