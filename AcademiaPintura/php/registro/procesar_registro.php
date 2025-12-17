@@ -115,5 +115,5 @@ if ($resultado['success']) {
     header("Location: registro.php?msg=" . urlencode($resultado['msg']) . "&tipo=error");
     exit();
 }
-}
+
 ?>
