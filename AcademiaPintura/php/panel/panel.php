@@ -26,6 +26,9 @@ if (!isset($_SESSION['usuario'])) {
 // ===== OBTENER DATOS DE SESIÓN =====
 // Obtiene el nombre de usuario de la sesión actual
 $usuario = $_SESSION['usuario'];
+
+// Obtiene el rol del usuario desde la BD
+$rol = obtenerRolUsuario($usuario);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -133,7 +136,14 @@ $usuario = $_SESSION['usuario'];
         <div class="welcome">
             <!-- Encabezado personalizado con nombre del usuario -->
             <!-- htmlspecialchars() evita XSS (inyección de código) -->
-            <h2>Bienvenido, <?php echo htmlspecialchars($usuario); ?>!</h2>
+            <h2>Bienvenido, <?php echo htmlspecialchars($usuario); ?>
+            <?php 
+                // Mostrar el rol si no es admin
+                if ($rol && $rol !== 'ADMIN') {
+                    echo " (" . htmlspecialchars($rol) . ")";
+                }
+            ?>
+            !</h2>
             
             <!-- Mensaje de éxito de login -->
             <p>Has iniciado sesión correctamente en la Academia de Pintura.</p>

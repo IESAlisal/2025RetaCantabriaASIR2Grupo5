@@ -1,3 +1,55 @@
+<?php
+session_start();
+ini_set("display_errors", true);
+error_reporting(E_ALL);
+
+require_once './php/constantes/constantes.php';
+require_once './funciones/funciones.php';
+
+// Crear base de datos y tablas si es necesario
+$basedatos = DATABASE;
+$bbdd = crearBBDD($basedatos);
+if ($bbdd == 0 || $bbdd == 1) {
+    crearTablas();
+    ensureDefaultRoles();
+
+    // Ejecutar script SQL externo para insertar roles y usuarios si no existen
+    $conexion = getConexionPDO();
+    if ($conexion) {
+        try {
+            $usersToCheck = ['admin','daniel','lucas','pool','hugo'];
+            $placeholders = implode(',', array_fill(0, count($usersToCheck), '?'));
+            $stmt = $conexion->prepare("SELECT usuario FROM `login` WHERE usuario IN ($placeholders)");
+            $stmt->execute($usersToCheck);
+            $found = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+            if (count($found) === 0) {
+                $sqlFile = __DIR__ . '/bbdd/insert_academia.sql';
+                if (file_exists($sqlFile)) {
+                    $sql = file_get_contents($sqlFile);
+                    try {
+                        $conexion->beginTransaction();
+                        $stmts = array_filter(array_map('trim', explode(';', $sql)));
+                        foreach ($stmts as $s) {
+                            if ($s === '') continue;
+                            $conexion->exec($s);
+                        }
+                        $conexion->commit();
+                    } catch (PDOException $e) {
+                        $conexion->rollBack();
+                        echo "<!-- Error ejecutando insert_academia.sql: " . htmlspecialchars($e->getMessage()) . " -->";
+                    }
+                } else {
+                    echo "<!-- insert_academia.sql no encontrado: $sqlFile -->";
+                }
+            }
+        } catch (Exception $e) {
+            echo "<!-- Error comprobando usuarios existentes: " . htmlspecialchars($e->getMessage()) . " -->";
+        }
+    }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -119,7 +171,7 @@
             <p>Preparando la base de datos.</p>
         </div>
         
-        <div id="content" class="content-box" style="display: none;">
+        <div id="content" class="content-box">
             <h2>Bienvenido</h2>
             <p>Accede a tu cuenta para continuar con tus actividades en la Academia de Pintura.</p>
             <div class="btn-group">
@@ -128,44 +180,6 @@
         </div>
     </div>
 
-    <?php 
-        // Mostrar errores de PHP en la página
-        ini_set("display_errors", true);
-        error_reporting(E_ALL);
-        
-        // Incluir archivo de constantes con configuración de BD
-        require_once './php/constantes/constantes.php';
-        
-        // Incluir archivo de funciones con conexión a BD
-        require_once './funciones/funciones.php';
-        
-        // Nombre de la base de datos a crear
-        $basedatos = DATABASE;
-        
-        // Intenta crear la BD
-        $bbdd = crearBBDD($basedatos);
-        
-        // Verifica si se creó la BD o ya existía
-        if($bbdd == 0){
-            // Si la BD se creó exitosamente (retorna 0)
-            // Intenta crear las tablas
-            if(crearTablas() == 1){
-                // Las tablas se crearon exitosamente
-                ensureDefaultRoles();
-                echo '<script>
-                    document.getElementById("loading").style.display = "none";
-                    document.getElementById("content").style.display = "block";
-                </script>';
-            }
-        }
-        else if ($bbdd == 1){
-            // Si la BD ya existía (retorna 1)
-            ensureDefaultRoles();
-            echo '<script>
-                document.getElementById("loading").style.display = "none";
-                document.getElementById("content").style.display = "block";
-            </script>';
-        }
-    ?>
+    
 </body>
 </html>
