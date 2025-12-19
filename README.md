@@ -1,4 +1,4 @@
-**2025 - RetaCantabria - ASIR2 - Grupo5**
+# **2025 - RetaCantabria - ASIR2 - Grupo5**
 
 ## Dia 1 01/12/2025
 En este dia estuvimos decidiendo los reles de cada persona, firmando los compromisos y leyendo y analizando la presentación del reto
@@ -19,3 +19,4 @@ Hugo ha estado investigado las distintas empresas disponibles para realizar las 
 Hugo ha realizado la creación de páginas/ campos y sus subcategorias en wordpress (quienes somos, contacto, galería, inicio, etc). Pool estuvo editando la documentacion sobre la BD, corrigiendo y detallando mas cosas, Daniel la creacion de los php para la pagina del reto (index y funciones) y Lucas la creacion del archivo configuracion logout en php, creacion del wordpress y puesto en la red local para la conexion, documentacion IAW
 
 ## Dia 7 10/12/2025
+Huego estubo repasando sus notas del curso para ver q necesito o no recuperar o q debo presentarme, luego estuvo investigando funcionalidades de wordpress. Pool estuvo editando codigo php y documentando los pasos, Daniel modificacion de código de php y Lucas Cceacion de funciones, copias de seguridad wordpress
