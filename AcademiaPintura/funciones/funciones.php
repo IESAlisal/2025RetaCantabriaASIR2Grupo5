@@ -111,15 +111,15 @@ function crearBBDD($basedatos){
                 // Ejecuta la creación
                 $conexion->exec($sql);
                 
-                // Muestra mensaje de éxito
-                echo "Base de datos $basedatos creada en MySQL por Objetos ";
-                echo "<br>";
+                // Muestra mensaje de éxito (comentado para no mostrar en pantalla)
+                // echo "Base de datos $basedatos creada en MySQL por Objetos ";
+                // echo "<br>";
                 
                 // Retorna 0 (éxito)
                 return 0;
             } catch (PDOException $ex) {
-                // Si hay error, muestra mensaje
-                echo "Error al ejecutar consulta: " . $ex->getMessage();
+                // Si hay error, muestra mensaje (comentado para no mostrar en pantalla)
+                // echo "Error al ejecutar consulta: " . $ex->getMessage();
                 
                 // Retorna 1 (error)
                 return 1;
@@ -129,8 +129,8 @@ function crearBBDD($basedatos){
         // Si la BD ya existía, retorna 0 (sin error)
         return 0;
     } catch (PDOException $e) {
-        // Error general, muestra mensaje
-        echo "Error: " . $e->getMessage();
+        // Error general, muestra mensaje (comentado para no mostrar en pantalla)
+        // echo "Error: " . $e->getMessage();
         
         // Retorna 1 (error)
         return 1;
@@ -774,6 +774,52 @@ function registroUsuario($usuario, $contrasena, $nombre, $apellido, $correo, $te
     } catch (PDOException $e) {
         // Error general, retorna con mensaje de error
         return ['success' => false, 'msg' => 'Error: ' . $e->getMessage()];
+    }
+}
+
+// ============================================================================
+// FUNCIÓN: obtenerRolUsuario($usuario)
+// PROPÓSITO: Obtiene el rol/nombre de rol de un usuario dado su nombre
+// PARÁMETRO: $usuario - nombre de usuario de la tabla login
+// RETORNA: String con el nombre del rol (ej: 'PROFESOR', 'ALUMNO', 'ADMIN') o null si no existe
+// ============================================================================
+function obtenerRolUsuario($usuario) {
+    // Intenta obtener el rol del usuario
+    try {
+        // Obtiene conexión a BD
+        $conexion = getConexionPDO();
+        
+        // Si no hay conexión, retorna null
+        if (!$conexion) {
+            return null;
+        }
+        
+        // Consulta preparada para obtener el rol del usuario
+        // Une tablas: login → usuarios → rol
+        $sql = "SELECT r.nombre_rol FROM `login` l
+                INNER JOIN `usuarios` u ON l.id_usuario = u.id_usuario
+                INNER JOIN `rol` r ON u.rol_codigo = r.codigo_rol
+                WHERE l.usuario = :usuario";
+        
+        // Prepara la consulta
+        $stmt = $conexion->prepare($sql);
+        
+        // Ejecuta con el usuario
+        $stmt->execute([':usuario' => $usuario]);
+        
+        // Obtiene el resultado
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        // Si encontró un resultado, retorna el nombre del rol
+        if ($resultado) {
+            return $resultado['nombre_rol'];
+        }
+        
+        // Si no encontró, retorna null
+        return null;
+    } catch (PDOException $e) {
+        // Si hay error, retorna null
+        return null;
     }
 }
 ?>
