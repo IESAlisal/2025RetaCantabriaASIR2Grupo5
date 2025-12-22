@@ -7,7 +7,9 @@
 // ============================================================================
 
 // Inicia sesión para verificar autenticación
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Incluye configuración de BD
 require_once "../constantes/constantes.php";

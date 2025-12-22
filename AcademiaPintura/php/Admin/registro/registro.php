@@ -1,3 +1,8 @@
+<?php
+// Acceso restringido: solamente ADMIN puede acceder a este formulario
+require_once "../../../funciones/funciones.php";
+requireRole(['ADMIN']);
+?>
 <!DOCTYPE html>
 <!-- Página de registro para la Academia de Pintura -->
 <html lang="es">
@@ -5,7 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro - Academia de Pintura</title>
-    <link rel="stylesheet" href="../../css/estilos.css">
+    <link rel="stylesheet" href="../../../css/estilos.css">
     <!-- Estilos personalizados para la página de registro -->
     <style>
         body {
@@ -192,11 +197,7 @@
             <!-- Botón para enviar el formulario de registro -->
             <button type="submit" class="registro-btn">Registrarse</button>
         </form>
-        
-        <!-- Enlace para ir al login si ya tienes cuenta -->
-        <div class="login-link">
-            ¿Ya tienes cuenta? <a href="../login/login.php">Inicia sesión aquí</a>
-        </div>
+    
     </div>
     <!-- Cierre del contenedor y del body -->
 </body>
