@@ -822,4 +822,23 @@ function obtenerRolUsuario($usuario) {
         return null;
     }
 }
+// ============================================================================
+// FUNCIÓN: requireRole(array $roles)
+// PROPÓSITO: Verifica que el usuario tenga uno de los roles permitidos
+// PARÁMETRO: $roles - array con nombres de rol aceptados, por ejemplo ['ADMIN']
+// COMPORTAMIENTO: Si no tiene permisos, devuelve 403 y termina ejecución
+// ============================================================================
+function requireRole(array $roles) {
+    // Asegura que la sesión esté iniciada
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Si no hay rol en sesión o no está en la lista, denegar acceso
+    if (!isset($_SESSION['rol']) || !in_array($_SESSION['rol'], $roles)) {
+        header("HTTP/1.1 403 Forbidden");
+        echo "Acceso denegado.";
+        exit();
+    }
+}
 ?>

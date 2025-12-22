@@ -48,6 +48,17 @@ SELECT 'USU-000004','pool', MD5('grupo05') FROM DUAL WHERE NOT EXISTS (SELECT 1 
 INSERT INTO `login` (`id_usuario`, `usuario`, `contrasena_hash`)
 SELECT 'USU-000005','hugo', MD5('grupo05') FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `login` WHERE `usuario` = 'hugo');
 
+-- Nuevo alumno: Diego (rol ALUMNO)
+INSERT INTO `usuarios` (`id_usuario`, `codigo_usuario`, `nombre`, `apellido`, `correo`, `telefono`, `rol_codigo`)
+SELECT 'USU-000006','USU-000006','Diego','Apellido','diego@example.com','600000005','ROL-ALU'
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'diego@example.com');
+
+INSERT INTO `login` (`id_usuario`, `usuario`, `contrasena_hash`)
+SELECT 'USU-000006','diego', MD5('diego123') FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `login` WHERE `usuario` = 'diego');
+
+INSERT INTO `alumno` (`id_usuario`, `fecha_ingreso`, `beca`)
+SELECT 'USU-000006', CURDATE(), 'No' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `alumno` WHERE `id_usuario` = 'USU-000006');
+
 -- 4) Insertar en `profesor` para usuarios con rol PROFESOR (si no existen)
 INSERT INTO `profesor` (`id_usuario`, `fecha_contratacion`)
 SELECT 'USU-000002', CURDATE() FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `profesor` WHERE `id_usuario` = 'USU-000002');

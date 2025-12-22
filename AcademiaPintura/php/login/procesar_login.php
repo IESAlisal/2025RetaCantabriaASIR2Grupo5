@@ -46,6 +46,8 @@ if (comprobarLogin($usuario, $contrasena_hash)) {
     // ===== LOGIN EXITOSO =====
     // Guarda el usuario en la sesión PHP
     $_SESSION["usuario"] = $usuario;
+    // Guarda el rol en la sesión para evitar consultar la BD continuamente
+    $_SESSION["rol"] = obtenerRolUsuario($usuario);
     
     // Redirecciona al panel de usuario
     header("Location: ../panel/panel.php");

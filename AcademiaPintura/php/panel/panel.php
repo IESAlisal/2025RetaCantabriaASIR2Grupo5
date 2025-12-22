@@ -27,8 +27,8 @@ if (!isset($_SESSION['usuario'])) {
 // Obtiene el nombre de usuario de la sesión actual
 $usuario = $_SESSION['usuario'];
 
-// Obtiene el rol del usuario desde la BD
-$rol = obtenerRolUsuario($usuario);
+// Obtiene el rol del usuario desde la sesión si existe, sino desde la BD
+$rol = $_SESSION['rol'] ?? obtenerRolUsuario($usuario);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -118,6 +118,46 @@ $rol = obtenerRolUsuario($usuario);
             color: #666;
             font-size: 16px;
         }
+
+        /* Estilos para desplegables (details/summary) usados en los paneles */
+        .dropdown details {
+            margin-top: 10px;
+        }
+
+        .dropdown summary {
+            cursor: pointer;
+            padding: 12px 15px;
+            background: linear-gradient(90deg, #f3f4f6, #ffffff);
+            border-radius: 8px;
+            list-style: none;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+            outline: none;
+        }
+
+        .dropdown[open] summary {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .dropdown ul {
+            margin: 10px 0 0 0;
+            padding-left: 18px;
+        }
+
+        .dropdown ul li {
+            margin: 8px 0;
+        }
+
+        .dropdown a {
+            color: #4a6cf7;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -132,25 +172,22 @@ $rol = obtenerRolUsuario($usuario);
     
     <!-- CONTENIDO PRINCIPAL -->
     <div class="container">
-        <!-- Caja de bienvenida -->
-        <div class="welcome">
-            <!-- Encabezado personalizado con nombre del usuario -->
-            <!-- htmlspecialchars() evita XSS (inyección de código) -->
-            <h2>Bienvenido, <?php echo htmlspecialchars($usuario); ?>
-            <?php 
-                // Mostrar el rol si no es admin
-                if ($rol && $rol !== 'ADMIN') {
-                    echo " (" . htmlspecialchars($rol) . ")";
-                }
-            ?>
-            !</h2>
-            
-            <!-- Mensaje de éxito de login -->
-            <p>Has iniciado sesión correctamente en la Academia de Pintura.</p>
-            
-            <!-- Estado del sistema -->
-            <p>Sistema de gestión académico operativo.</p>
-        </div>
+        <?php
+            // Mostrar la vista según el rol usando un switch
+            switch ($rol) {
+                case 'ADMIN':
+                    include 'PanelAdmin.php';
+                    break;
+                case 'PROFESOR':
+                    include 'PanelProfesor.php';
+                    break;
+                case 'ALUMNO':
+                    include 'PanelAlumno.php';
+                    break;
+                default:
+                    echo '<div class="welcome"><h2>Bienvenido, '.htmlspecialchars($usuario).'!</h2><p>Rol desconocido.</p></div>';
+            }
+        ?>
     </div>
 </body>
 </html>
