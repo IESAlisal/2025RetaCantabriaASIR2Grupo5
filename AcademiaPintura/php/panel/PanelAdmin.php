@@ -11,6 +11,7 @@ requireRole(['ADMIN']);
         <details>
             <summary>Usuarios</summary>
             <ul>
+                <li><a href="../Admin/registro/registro.php">Crear usuario</a></li>
                 <li><a href="../admin/usuarios.php">Gestionar usuarios</a></li>
                 <li><a href="../admin/roles.php">Gestionar roles</a></li>
             </ul>

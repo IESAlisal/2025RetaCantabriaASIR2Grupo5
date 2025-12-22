@@ -11,10 +11,13 @@ ini_set("display_errors", true);
 error_reporting(E_ALL);
 
 // Incluye configuración de BD
-require_once "../constantes/constantes.php";
+require_once "../../constantes/constantes.php";
 
 // Incluye funciones de BD
-require_once "../../funciones/funciones.php";
+require_once "../../../funciones/funciones.php";
+
+// Protege que únicamente ADMIN pueda procesar registros
+requireRole(['ADMIN']);
 
 // ===== VALIDACIÓN: Verifica que es solicitud POST =====
 // Si no es POST (ej: acceso directo), redirecciona
@@ -107,8 +110,9 @@ $resultado = registroUsuario($usuario, $contrasena, $nombre, $apellido, $correo,
 // ===== VERIFICAR RESULTADO =====
 // Si el registro fue exitoso
 if ($resultado['success']) {
-    // Redirecciona a login con mensaje de éxito
-    header("Location: ../login/login.php?msg=" . urlencode("Registro completado. Por favor inicia sesión.") . "&tipo=success");
+    // Redirecciona al listado de usuarios del admin con mensaje de éxito
+    // Importante: desde php/Admin/registro/ debemos subir DOS niveles para llegar a php/admin/usuarios.php
+    header("Location: ../../admin/usuarios.php?msg=" . urlencode("Usuario creado correctamente.") . "&tipo=success");
     exit();
 } else {
     // Si falló, redirecciona al formulario con error
