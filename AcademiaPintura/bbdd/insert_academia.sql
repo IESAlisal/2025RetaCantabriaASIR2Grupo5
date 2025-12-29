@@ -13,28 +13,28 @@ SELECT 'ROL-PRO', 'PROFESOR' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `rol` WHE
 -- 2) Usuarios (tabla `usuarios`)
 -- admin
 INSERT INTO `usuarios` (`id_usuario`, `codigo_usuario`, `nombre`, `apellido`, `correo`, `telefono`, `rol_codigo`)
-SELECT 'USU-000001','USU-000001','Admin','Default','admin@example.com','600000000','ROL-ADM'
-FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'admin@example.com');
+SELECT 'USU-000001','USU-000001','Admin','Default','admin@gmail.com','600000000','ROL-ADM'
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'admin@gmail.com');
 
 -- daniel
 INSERT INTO `usuarios` (`id_usuario`, `codigo_usuario`, `nombre`, `apellido`, `correo`, `telefono`, `rol_codigo`)
-SELECT 'USU-000002','USU-000002','Daniel','Apellido','daniel@example.com','600000001','ROL-PRO'
-FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'daniel@example.com');
+SELECT 'USU-000002','USU-000002','Daniel','Apellido','daniel@gmail.com','600000001','ROL-PRO'
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'daniel@gmail.com');
 
 -- lucas
 INSERT INTO `usuarios` (`id_usuario`, `codigo_usuario`, `nombre`, `apellido`, `correo`, `telefono`, `rol_codigo`)
-SELECT 'USU-000003','USU-000003','Lucas','Apellido','lucas@example.com','600000002','ROL-PRO'
-FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'lucas@example.com');
+SELECT 'USU-000003','USU-000003','Lucas','Apellido','lucas@gmail.com','600000002','ROL-PRO'
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'lucas@gmail.com');
 
 -- pool
 INSERT INTO `usuarios` (`id_usuario`, `codigo_usuario`, `nombre`, `apellido`, `correo`, `telefono`, `rol_codigo`)
-SELECT 'USU-000004','USU-000004','Pool','Apellido','pool@example.com','600000003','ROL-PRO'
-FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'pool@example.com');
+SELECT 'USU-000004','USU-000004','Pool','Apellido','pool@gmail.com','600000003','ROL-PRO'
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'pool@gmail.com');
 
 -- hugo
 INSERT INTO `usuarios` (`id_usuario`, `codigo_usuario`, `nombre`, `apellido`, `correo`, `telefono`, `rol_codigo`)
-SELECT 'USU-000005','USU-000005','Hugo','Apellido','hugo@example.com','600000004','ROL-PRO'
-FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'hugo@example.com');
+SELECT 'USU-000005','USU-000005','Hugo','Apellido','hugo@gmail.com','600000004','ROL-PRO'
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'hugo@gmail.com');
 
 -- 3) Credenciales (tabla `login`) - contraseñas almacenadas como MD5
 INSERT INTO `login` (`id_usuario`, `usuario`, `contrasena_hash`)
@@ -50,8 +50,8 @@ SELECT 'USU-000005','hugo', MD5('grupo05') FROM DUAL WHERE NOT EXISTS (SELECT 1 
 
 -- Nuevo alumno: Diego (rol ALUMNO)
 INSERT INTO `usuarios` (`id_usuario`, `codigo_usuario`, `nombre`, `apellido`, `correo`, `telefono`, `rol_codigo`)
-SELECT 'USU-000006','USU-000006','Diego','Apellido','diego@example.com','600000005','ROL-ALU'
-FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'diego@example.com');
+SELECT 'USU-000006','USU-000006','Diego','Apellido','diego@gmail.com','600000005','ROL-ALU'
+FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `usuarios` WHERE `correo` = 'diego@gmail.com');
 
 INSERT INTO `login` (`id_usuario`, `usuario`, `contrasena_hash`)
 SELECT 'USU-000006','diego', MD5('diego123') FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM `login` WHERE `usuario` = 'diego');
