@@ -112,7 +112,7 @@ $resultado = registroUsuario($usuario, $contrasena, $nombre, $apellido, $correo,
 if ($resultado['success']) {
     // Redirecciona al listado de usuarios del admin con mensaje de éxito
     // Importante: desde php/Admin/registro/ debemos subir DOS niveles para llegar a php/admin/usuarios.php
-    header("Location: ../../admin/usuarios.php?msg=" . urlencode("Usuario creado correctamente.") . "&tipo=success");
+    header("Location: ../../admin/registro/registro.php?msg=" . urlencode("Usuario creado correctamente.") . "&tipo=success");
     exit();
 } else {
     // Si falló, redirecciona al formulario con error

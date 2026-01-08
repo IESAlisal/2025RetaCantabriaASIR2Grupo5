@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode(['success' => false, 'message' => 'No se puede borrar un usuario con rol ADMIN']);
                 exit();
             } else {
-                header('Location: usuarios.php?msg=' . urlencode('No se puede borrar un usuario con rol ADMIN') . '&tipo=error');
+                header('Location: gestionar_usuarios.php?msg=' . urlencode('No se puede borrar un usuario con rol ADMIN') . '&tipo=error');
                 exit();
             }
         }
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($isAjax) {
             header('Content-Type: application/json; charset=utf-8');
-            echo json_encode(['success' => true, 'redirect' => 'usuarios.php?msg=' . rawurlencode('Usuario borrado') . '&tipo=success']);
+            echo json_encode(['success' => true, 'redirect' => 'gestionar_usuarios.php?msg=' . rawurlencode('Usuario borrado') . '&tipo=success']);
             exit();
         } else {
             header('Location: gestionar_usuarios.php?msg=' . urlencode('Usuario borrado') . '&tipo=success');
