@@ -80,7 +80,7 @@ $roles = ['ROL-ADM' => 'ADMIN', 'ROL-PRO' => 'PROFESOR', 'ROL-ALU' => 'ALUMNO'];
             </div>
 
             <button class="btn" type="submit">Guardar cambios</button>
-            <a class="btn" style="background:#aaa; margin-left:8px;" href="usuarios.php">Cancelar</a>
+            <a class="btn" style="background:#aaa; margin-left:8px;" href="gestionar_usuarios.php">Cancelar</a>
         </form>
     </div>
 </div>
