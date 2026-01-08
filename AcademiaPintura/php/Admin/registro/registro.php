@@ -196,8 +196,10 @@ requireRole(['ADMIN']);
             
             <!-- Botón para enviar el formulario de registro -->
             <button type="submit" class="registro-btn" name="registro">Registrarse</button>
-            <button type="button" class="salir-btn" name="salir" href="">Salir</button>
-
+            <br><br>
+            <div style="text-align: center;">
+    <a class="registro-btn" href="../../panel/panel.php">Salir</a>
+</div>
         </form>
     
     </div>
