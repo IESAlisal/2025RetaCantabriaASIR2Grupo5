@@ -12,16 +12,22 @@ requireRole(['ADMIN']);
             <summary>Usuarios</summary>
             <ul>
                 <li><a href="../Admin/registro/registro.php">Crear usuario</a></li>
-                <li><a href="../admin/usuarios.php">Gestionar usuarios</a></li>
-                <li><a href="../admin/roles.php">Gestionar roles</a></li>
+                <li><a href="../admin/gestionar_usuarios.php">Gestionar usuarios</a></li>
             </ul>
         </details>
 
         <details>
             <summary>Asignaturas</summary>
             <ul>
-                <li><a href="../admin/asignaturas.php">Crear/editar asignaturas</a></li>
-                <li><a href="../admin/aulas.php">Gestionar aulas</a></li>
+                <li><a href="../admin/crear_asignatura.php">Crear asignatura</a></li>
+                <li><a href="../admin/gestionar_asignaturas.php">Gestionar asignaturas</a></li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>Aulas</summary>
+            <ul>
+                <li><a href="../admin/gestionar_aulas.php">Gestionar aulas</a></li>
             </ul>
         </details>
 
