@@ -254,7 +254,6 @@ if ($editar_id) {
             <div class="form-group">
                 <label for="profesor">Profesor:</label>
                 <select id="profesor" name="id_profesor">
-                    <option value="">Sin asignar</option>
                     <?php foreach ($profesores as $prof): ?>
                         <option value="<?php echo $prof['id_profesor']; ?>" 
                             <?php echo ($prof['id_profesor'] == $asignatura_editar['id_profesor']) ? 'selected' : ''; ?>>
