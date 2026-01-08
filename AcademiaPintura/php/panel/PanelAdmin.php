@@ -32,10 +32,9 @@ requireRole(['ADMIN']);
         </details>
 
         <details>
-            <summary>Reportes</summary>
+            <summary>Exportar datos</summary>
             <ul>
-                <li><a href="../admin/reportes.php">Ver reportes</a></li>
-                <li><a href="../admin/exportar.php">Exportar datos</a></li>
+                <li><a href="../admin/exportar_datos.php">Exportar datos</a></li>
             </ul>
         </details>
     </div>
