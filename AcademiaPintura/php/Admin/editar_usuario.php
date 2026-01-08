@@ -5,7 +5,7 @@ requireRole(['ADMIN']);
 // Obtener id por GET
 $id = $_GET['id'] ?? null;
 if (!$id) {
-    header('Location: usuarios.php?msg=' . urlencode('ID de usuario no proporcionado') . '&tipo=error');
+    header('Location: gestionar_usuarios.php?msg=' . urlencode('ID de usuario no proporcionado') . '&tipo=error');
     exit();
 }
 
@@ -17,11 +17,11 @@ try {
     $stmt->execute([':id' => $id]);
     $u = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$u) {
-        header('Location: usuarios.php?msg=' . urlencode('Usuario no encontrado') . '&tipo=error');
+        header('Location: gestionar_usuarios.php?msg=' . urlencode('Usuario no encontrado') . '&tipo=error');
         exit();
     }
 } catch (Exception $e) {
-    header('Location: usuarios.php?msg=' . urlencode('Error al cargar usuario') . '&tipo=error');
+    header('Location: gestionar_usuarios.php?msg=' . urlencode('Error al cargar usuario') . '&tipo=error');
     exit();
 }
 
