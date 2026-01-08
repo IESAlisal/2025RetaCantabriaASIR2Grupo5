@@ -4,7 +4,7 @@ requireRole(['ADMIN']);
 
 // Solo POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: usuarios.php');
+    header('Location: gestionar_usuarios.php');
     exit();
 }
 
@@ -43,7 +43,7 @@ try {
     $stmt = $conexion->prepare($sql);
     $stmt->execute([':nombre'=>$nombre, ':apellido'=>$apellido, ':correo'=>$correo, ':telefono'=>$telefono, ':rol'=>$rol, ':id'=>$id]);
 
-    header('Location: usuarios.php?msg=' . urlencode('Usuario actualizado') . '&tipo=success');
+    header('Location: gestionar_usuarios.php?msg=' . urlencode('Usuario actualizado') . '&tipo=success');
     exit();
 } catch (Exception $e) {
     header('Location: editar_usuario.php?id=' . urlencode($id) . '&msg=' . urlencode('Error actualizando usuario') . '&tipo=error');

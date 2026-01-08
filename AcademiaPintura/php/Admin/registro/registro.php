@@ -195,7 +195,7 @@ requireRole(['ADMIN']);
             </div>
             
             <!-- Botón para enviar el formulario de registro -->
-            <button type="submit" class="registro-btn">Registrarse</button>
+            <button type="submit" class="registro-btn" name="registro">Registrarse</button>
         </form>
     
     </div>

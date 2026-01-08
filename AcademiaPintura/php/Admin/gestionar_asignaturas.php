@@ -275,7 +275,7 @@ if ($editar_id) {
 
             <div class="form-buttons">
                 <button type="submit" class="btn-guardar">Guardar Cambios</button>
-                <a href="asignaturas.php" class="btn-cancelar" style="text-decoration: none; text-align: center;">Cancelar</a>
+                <a href="gestionar_asignaturas.php" class="btn-cancelar" style="text-decoration: none; text-align: center;">Cancelar</a>
             </div>
         </form>
     </div>
@@ -310,7 +310,7 @@ if ($editar_id) {
                     </p>
                 </div>
                 <div class="asignatura-actions">
-                    <a href="asignaturas.php?editar=<?php echo $asig['id_asignatura']; ?>" class="btn btn-editar">Editar</a>
+                    <a href="gestionar_asignaturas.php?editar=<?php echo $asig['id_asignatura']; ?>" class="btn btn-editar">Editar</a>
                     <form method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta asignatura?');">
                         <input type="hidden" name="id_asignatura" value="<?php echo $asig['id_asignatura']; ?>">
                         <input type="hidden" name="eliminar_asignatura" value="1">
