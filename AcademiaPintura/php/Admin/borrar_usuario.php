@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['success' => false, 'message' => 'ID no proporcionado']);
             exit();
         } else {
-            header('Location: usuarios.php?msg=' . urlencode('ID no proporcionado') . '&tipo=error');
+            header('Location: gestionar_usuarios.php?msg=' . urlencode('ID no proporcionado') . '&tipo=error');
             exit();
         }
     }
@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo json_encode(['success' => false, 'message' => 'Usuario no existe']);
                 exit();
             } else {
-                header('Location: usuarios.php?msg=' . urlencode('Usuario no existe') . '&tipo=error');
+                header('Location: gestionar_usuarios.php?msg=' . urlencode('Usuario no existe') . '&tipo=error');
                 exit();
             }
         }
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['success' => true, 'redirect' => 'usuarios.php?msg=' . rawurlencode('Usuario borrado') . '&tipo=success']);
             exit();
         } else {
-            header('Location: usuarios.php?msg=' . urlencode('Usuario borrado') . '&tipo=success');
+            header('Location: gestionar_usuarios.php?msg=' . urlencode('Usuario borrado') . '&tipo=success');
             exit();
         }
     } catch (Exception $e) {
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo json_encode(['success' => false, 'message' => 'Error al borrar usuario']);
             exit();
         } else {
-            header('Location: usuarios.php?msg=' . urlencode('Error al borrar usuario') . '&tipo=error');
+            header('Location: gestionar_usuarios.php?msg=' . urlencode('Error al borrar usuario') . '&tipo=error');
             exit();
         }
     }
@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // Si GET, mostrar confirmación
 if (!$id) {
-    header('Location: usuarios.php?msg=' . urlencode('ID de usuario no proporcionado') . '&tipo=error');
+    header('Location: gestionar_usuarios.php?msg=' . urlencode('ID de usuario no proporcionado') . '&tipo=error');
     exit();
 }
 
@@ -81,11 +81,11 @@ try {
     $stmt->execute([':id' => $id]);
     $u = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$u) {
-        header('Location: usuarios.php?msg=' . urlencode('Usuario no encontrado') . '&tipo=error');
+        header('Location: gestionar_usuarios.php?msg=' . urlencode('Usuario no encontrado') . '&tipo=error');
         exit();
     }
 } catch (Exception $e) {
-    header('Location: usuarios.php?msg=' . urlencode('Error al cargar usuario') . '&tipo=error');
+    header('Location: gestionar_usuarios.php?msg=' . urlencode('Error al cargar usuario') . '&tipo=error');
     exit();
 }
 
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // Cancelar -> animar salida y volver a lista
     cancelBtn.addEventListener('click', function(){
-        hideAndRedirect('usuarios.php');
+        hideAndRedirect('gestionar_usuarios.php');
     });
 
     // Evitar que clics en overlay cierren modal (previene cierres accidentales)
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function(){
             }
 
             if (resp.ok && !json) {
-                hideAndRedirect('usuarios.php'); return;
+                hideAndRedirect('gestionar_usuarios.php'); return;
             }
 
             // Mostrar error devuelto
