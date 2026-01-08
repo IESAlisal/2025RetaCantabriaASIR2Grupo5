@@ -47,3 +47,10 @@ Hugo y Pool finalizaron la estructura en AWS, implementando autoscaling, un bala
 
 ## Dia 16 22/12/2025
 Hugo estuvo realizando Documentación (entre otras este archivo), acabe de crear y comprobar que nuestra red en AWS es completamente funcional y correcta.
+
+## DIA 17 23/12/2025
+El Grupo 5 no asistió ese día a clase.
+
+## DIA 18 07/01/2026
+
+## DIA 19 08/01/2026
