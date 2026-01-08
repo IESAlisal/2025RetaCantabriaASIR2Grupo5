@@ -34,7 +34,7 @@ requireRole(['ADMIN']);
         <details>
             <summary>Exportar datos</summary>
             <ul>
-                <li><a href="../Admin/exportar.php">Exportar datos</a></li>
+                <li><a href="../Admin/exportar_datos.php">Exportar datos</a></li>
             </ul>
         </details>
     </div>
