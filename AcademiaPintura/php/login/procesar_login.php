@@ -36,12 +36,11 @@ $usuario = $_POST["usuario"] ?? "";
 $contrasena = $_POST["contrasena"] ?? "";
 
 // ===== HASHEAR CONTRASEÑA =====
-// Hashea la contraseña con MD5 para compararla con la BD
-// NOTA: MD5 es menos seguro que bcrypt, considera migrar en futuro
+// Ahora sí: hasheamos la contraseña con MD5 para comparar con la BD
 $contrasena_hash = md5($contrasena);
 
 // ===== VALIDAR CREDENCIALES =====
-// Llama función que verifica si usuario y hash existen en BD
+// Llama función que verifica si usuario y contraseña existen en BD (sin hash)
 if (comprobarLogin($usuario, $contrasena_hash)) {
     // ===== LOGIN EXITOSO =====
     // Guarda el usuario en la sesión PHP

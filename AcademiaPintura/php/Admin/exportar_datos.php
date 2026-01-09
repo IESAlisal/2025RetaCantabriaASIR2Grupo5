@@ -19,6 +19,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
                 <h3>🔒 Backup del Sitio</h3>
                 <input type="password" name="pass" placeholder="Contraseña" required>
                 <input type="submit" name="login" value="Acceder">
+                <a href="../panel/panel.php" class="btn-salir" style="display:inline-block;margin-top:10px;padding:8px 16px;background:#764ba2;color:#fff;text-decoration:none;border-radius:4px;">Salir al menú principal</a>
               </form>';
         exit;
     }
@@ -41,6 +42,14 @@ if (isset($_GET['type'])) {
 }
 
 // ========= MENÚ =========
+echo '<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Exportar datos - Academia de Pintura</title>
+    <link rel="stylesheet" href="../../css/estilos_unificados.css">
+</head>
+<body>';
 echo '<h2>📦 Exportador del Sitio</h2>';
 echo '<p><a href="?type=sql">📊 Exportar Base de Datos (SQL)</a></p>';
 echo '<p><a href="?type=json">📁 Exportar BD + Info (JSON)</a></p>';
@@ -48,6 +57,7 @@ if ($CONFIG['allow_files']) {
     echo '<p><a href="?type=zip">🗂️ Exportar Todo (ZIP)</a></p>';
 }
 echo '<p><a href="?type=logout" style="color:red;">🚪 Salir</a></p>';
+echo '</body></html>';
 exit;
 
 // ========= FUNCIONES =========
