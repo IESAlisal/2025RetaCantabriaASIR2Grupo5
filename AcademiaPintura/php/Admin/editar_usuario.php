@@ -33,13 +33,7 @@ $roles = ['ROL-ADM' => 'ADMIN', 'ROL-PRO' => 'PROFESOR', 'ROL-ALU' => 'ALUMNO'];
 <head>
     <meta charset="UTF-8">
     <title>Editar usuario</title>
-    <link rel="stylesheet" href="../../css/estilos.css">
-    <style>
-        .form-group { margin-bottom: 12px; }
-        .form-group label { display:block; margin-bottom:6px; }
-        .form-group input, .form-group select { width:100%; padding:8px; }
-        .btn { padding:8px 12px; border-radius:4px; background:#667eea; color:#fff; text-decoration:none; border:none; }
-    </style>
+    <link rel="stylesheet" href="../../css/estilos_unificados.css">
 </head>
 <body>
 <?php include '../panel/panel.php'; ?>

@@ -12,7 +12,6 @@ requireRole(['PROFESOR']);
             <summary>Mis asignaturas</summary>
             <ul>
                 <li><a href="../profesor/mis_asignaturas.php">Ver mis asignaturas</a></li>
-                <li><a href="../profesor/material.php">Subir/gestionar material</a></li>
             </ul>
         </details>
 

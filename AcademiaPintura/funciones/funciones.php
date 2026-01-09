@@ -604,30 +604,14 @@ function borrarAsignaturas($id)
 function comprobarLogin($usuario, $contrasena_hash) {
     // Intenta verificar las credenciales
     try {
-        // Obtiene conexión a BD
         $conexion = getConexionPDO();
-        
-        // Si no hay conexión, retorna false
-        if (!$conexion) {
-            return false;
-        }
-        
-        // Consulta preparada para buscar usuario con esa contraseña
+        if (!$conexion) return false;
+        // Para pruebas: compara contraseña en texto plano
         $sql = "SELECT * FROM `login` WHERE `usuario` = :usuario AND `contrasena_hash` = :hash";
-        
-        // Prepara la consulta
         $stmt = $conexion->prepare($sql);
-        
-        // Ejecuta con usuario y hash
         $stmt->execute([':usuario' => $usuario, ':hash' => $contrasena_hash]);
-        
-        // Si encontró exactamente 1 resultado (rowCount() === 1), login válido
         return ($stmt->rowCount() === 1);
     } catch (PDOException $e) {
-        // Error al verificar, muestra mensaje
-        echo "Error: " . $e->getMessage();
-        
-        // Retorna false (login inválido)
         return false;
     }
 }

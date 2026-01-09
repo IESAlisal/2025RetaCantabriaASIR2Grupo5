@@ -95,7 +95,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Borrar usuario</title>
-    <link rel="stylesheet" href="../../css/estilos.css">
+    <link rel="stylesheet" href="../../css/estilos_unificados.css">
 </head>
 <body>
 <?php include '../panel/panel.php'; ?>
@@ -118,54 +118,7 @@ try {
     </div>
 </div>
 
-<style>
-    /* Nuevo overlay/modal con animación de entrada/salida (fade + scale) */
-    .confirm-overlay {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(15,15,15,0.0);
-        z-index: 9999;
-        padding: 20px;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 260ms ease-in-out;
-    }
-    .confirm-overlay.show { opacity: 1; background: rgba(15,15,15,0.5); pointer-events: auto; }
-    .confirm-overlay.hide { opacity: 0; pointer-events: none; }
-
-    .confirm-modal {
-        width: 100%;
-        max-width: 640px;
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-        padding: 20px 22px;
-        transform: scale(0.98);
-        opacity: 0;
-        transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 240ms ease-in-out;
-    }
-    .confirm-modal.show { transform: scale(1); opacity: 1; }
-    .confirm-modal.hide { transform: scale(0.96); opacity: 0; }
-
-    .confirm-modal h2 { margin: 0 0 8px; }
-    .confirm-modal p { margin: 0 0 14px; color: #333; }
-
-    .confirm-msg { margin-bottom: 12px; padding: 10px 12px; border-radius: 6px; background: #fff6f6; color: #7a1a1a; border: 1px solid #ffd6d6; }
-
-    .confirm-actions { display: flex; gap: 10px; justify-content: flex-end; }
-    .btn-danger { background: #c62828; color: #fff; border: none; padding: 9px 14px; border-radius: 6px; font-weight:600; cursor: pointer; }
-    .btn-danger[disabled] { opacity: 0.7; cursor: default; }
-    .btn-cancel { background: transparent; border: 1px solid #ddd; padding: 9px 12px; border-radius: 6px; cursor: pointer; }
-
-    /* spinner pequeño en botón */
-    .btn-spinner { display:inline-block; width:14px; height:14px; border-radius:50%; border:2px solid rgba(255,255,255,0.3); border-top-color: #fff; animation: spin 0.8s linear infinite; vertical-align:middle; margin-right:8px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    @media (max-width:520px){ .confirm-actions { flex-direction: column-reverse; } .btn-danger,.btn-cancel{ width:100%; } }
-</style>
+<!-- Estilos personalizados eliminados, ahora en el CSS unificado -->
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){

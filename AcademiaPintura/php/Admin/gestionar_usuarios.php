@@ -22,14 +22,8 @@ try {
 <head>
     <meta charset="UTF-8">
     <title>Gestionar usuarios - Admin</title>
-    <link rel="stylesheet" href="../../css/estilos.css">
-    <style>
-        table.users { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        table.users th, table.users td { padding: 8px 10px; border-bottom: 1px solid #eee; text-align: left; }
-        .actions a, .actions form { display: inline-block; margin-right: 8px; }
-        .small-btn { padding: 6px 10px; border-radius: 4px; background:#667eea; color:#fff; text-decoration:none; }
-        .danger { background: #d32f2f; }
-    </style>
+    <link rel="stylesheet" href="../../css/estilos_unificados.css">
+    <!-- Estilos personalizados eliminados, ahora en el CSS unificado -->
 </head>
 <body>
 <?php include '../panel/panel.php'; ?>

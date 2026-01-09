@@ -1,0 +1,785 @@
+/* ============================================================================
+   ESTILOS UNIFICADOS - ACADEMIA DE PINTURA
+   Autor: Sistema Unificado CSS
+   Descripción: Hoja de estilos consolidada para todo el proyecto
+   ============================================================================ */
+
+/* ============================================================================
+   VARIABLES CSS
+   ============================================================================ */
+:root {
+    /* Colores principales */
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --primary-color: #667eea;
+    --primary-dark: #764ba2;
+    
+    /* Colores de estado */
+    --error-bg: #ffebee;
+    --error-border: #d32f2f;
+    --error-text: #c62828;
+    
+    --success-bg: #e8f5e9;
+    --success-border: #4caf50;
+    --success-text: #2e7d32;
+    
+    --info-bg: #e3f2fd;
+    --info-border: #2196f3;
+    --info-text: #1565c0;
+    
+    /* Colores neutros */
+    --bg-light: #f5f5f5;
+    --bg-gray: #f4f4f4;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --text-light: #555;
+    --border-color: #ddd;
+    --border-light: #eee;
+    
+    /* Sombras */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 10px 40px rgba(0, 0, 0, 0.2);
+    
+    /* Bordes */
+    --border-radius-sm: 4px;
+    --border-radius-md: 5px;
+    --border-radius-lg: 10px;
+    --border-radius-xl: 15px;
+    
+    /* Espaciado */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    --spacing-xxl: 40px;
+}
+
+/* ============================================================================
+   RESET Y ESTILOS BASE
+   ============================================================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: linear-gradient(135deg, #e0e7ff 0%, #f5f5fa 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ============================================================================
+   LAYOUTS - PÁGINAS ESPECIALES
+   ============================================================================ */
+
+/* Layout centrado con gradiente (Login, Registro, Index) */
+body.centered-layout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: var(--primary-gradient);
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout centrado con flexbox vertical (Index) */
+body.flex-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--primary-gradient);
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout con fondo gris (Panel) */
+body.panel-layout {
+    background: var(--bg-light);
+}
+
+/* ============================================================================
+   CONTENEDORES
+   ============================================================================ */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    background: rgba(255,255,255,0.95);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(102,126,234,0.10), 0 1.5px 8px rgba(118,75,162,0.08);
+    padding: 40px 30px 30px 30px;
+    margin: 40px 0;
+    width: 100%;
+}
+
+.container.panel-container {
+    margin: var(--spacing-xl) auto;
+}
+
+/* ============================================================================
+   CAJAS DE CONTENIDO
+   ============================================================================ */
+
+/* Caja genérica blanca con sombra */
+.white-box {
+    background: white;
+    padding: var(--spacing-xxl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Contenedor de login */
+.login-container {
+    background: white;
+    padding: var(--spacing-xxl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-container h1 {
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Contenedor de registro */
+.registro-container {
+    background: white;
+    padding: var(--spacing-xxl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 500px;
+}
+
+.registro-container h1 {
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Contenedor de bienvenida (Index) */
+.content-box {
+    background: white;
+    padding: 60px var(--spacing-xxl);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-xl);
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+.content-box h2 {
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    font-size: 32px;
+}
+
+.content-box p {
+    color: var(--text-secondary);
+    font-size: 18px;
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.6;
+}
+
+/* Caja de bienvenida (Panel) */
+.welcome {
+    background: rgba(255,255,255,0.98);
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(102,126,234,0.10);
+    padding: 32px 24px;
+    margin-bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.welcome h2 {
+    font-size: 2.2rem;
+    color: var(--primary-dark);
+    margin-bottom: 18px;
+}
+
+.welcome p, .welcome label, .welcome select, .welcome form, .welcome table {
+    font-size: 1.1rem;
+}
+
+/* ============================================================================
+   NAVEGACIÓN
+   ============================================================================ */
+.navbar {
+    background: var(--primary-gradient);
+    color: white;
+    padding: var(--spacing-md) var(--spacing-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-sm);
+}
+
+.navbar.transparent {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-lg) var(--spacing-xxl);
+}
+
+.navbar h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.navbar h1.large {
+    font-size: 28px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-md);
+    transition: background 0.3s;
+}
+
+.navbar a:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.3s;
+}
+
+.navbar-links a:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================================================
+   FORMULARIOS
+   ============================================================================ */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--text-light);
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+}
+
+/* Layout de formulario en dos columnas */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+/* ============================================================================
+   BOTONES
+   ============================================================================ */
+.btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+/* Botones especiales para formularios */
+.login-btn,
+.registro-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.login-btn:hover,
+.registro-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Grupos de botones */
+.btn-group {
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-group .btn {
+    padding: var(--spacing-md) var(--spacing-xxl);
+    font-size: 18px;
+}
+
+.btn-group .btn-secondary {
+    background: #f0f0f0;
+    color: var(--text-primary);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-group .btn-secondary:hover {
+    transform: translateY(-2px);
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Botones pequeños (tablas) */
+.small-btn {
+    padding: 6px var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.small-btn.danger {
+    background: var(--error-border);
+}
+
+.small-btn:hover {
+    opacity: 0.9;
+}
+
+/* ============================================================================
+   MENSAJES Y ALERTAS
+   ============================================================================ */
+.alert {
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+    border-radius: var(--border-radius-sm);
+    border-left: 4px solid;
+}
+
+.alert-error,
+.error-msg {
+    color: var(--error-text);
+    background: var(--error-bg);
+    padding: 12px;
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-lg);
+    border-left: 4px solid var(--error-border);
+    display: none;
+}
+
+.alert-success,
+.success-msg {
+    color: var(--success-text);
+    background: var(--success-bg);
+    padding: 12px;
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-lg);
+    border-left: 4px solid var(--success-border);
+    display: none;
+}
+
+.alert-info {
+    background: var(--info-bg);
+    border-color: var(--info-border);
+    color: var(--info-text);
+}
+
+/* ============================================================================
+   TABLAS
+   ============================================================================ */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: var(--shadow-sm);
+    margin: var(--spacing-lg) 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table th {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    font-size: 1.08em;
+}
+
+table td {
+    background: rgba(255,255,255,0.95);
+}
+
+table tr:hover {
+    background: var(--bg-light);
+}
+
+/* Tabla de usuarios específica */
+table.users {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-md);
+}
+
+table.users th,
+table.users td {
+    padding: 8px var(--spacing-sm);
+    border-bottom: 1px solid var(--border-light);
+    text-align: left;
+}
+
+.actions a,
+.actions form {
+    display: inline-block;
+    margin-right: 8px;
+}
+
+/* ============================================================================
+   DROPDOWNS / DESPLEGABLES (PANEL)
+   ============================================================================ */
+.dropdown details {
+    margin-top: var(--spacing-sm);
+}
+
+.dropdown summary {
+    cursor: pointer;
+    padding: 12px var(--spacing-md);
+    background: linear-gradient(90deg, #f3f4f6, #ffffff);
+    border-radius: 8px;
+    list-style: none;
+    font-weight: 600;
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    outline: none;
+}
+
+.dropdown summary:hover {
+    background: linear-gradient(90deg, #e5e7eb, #f9fafb);
+}
+
+.dropdown details[open] summary {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.dropdown ul {
+    margin: var(--spacing-sm) 0 0 0;
+    padding-left: 18px;
+}
+
+.dropdown ul li {
+    margin: 8px 0;
+}
+
+.dropdown a {
+    color: #4a6cf7;
+    text-decoration: none;
+}
+
+.dropdown a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================================
+   MODALES
+   ============================================================================ */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: var(--spacing-lg);
+    border: 1px solid #888;
+    border-radius: var(--border-radius-sm);
+    width: 90%;
+    max-width: 500px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.modal-header h2 {
+    margin: 0;
+}
+
+.close {
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000;
+}
+
+/* === MODALES DE CONFIRMACIÓN Y OVERLAYS (borrar_usuario.php) === */
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15,15,15,0.0);
+    z-index: 9999;
+    padding: 20px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 260ms ease-in-out;
+}
+.confirm-overlay.show { opacity: 1; background: rgba(15,15,15,0.5); pointer-events: auto; }
+.confirm-overlay.hide { opacity: 0; pointer-events: none; }
+
+.confirm-modal {
+    width: 100%;
+    max-width: 640px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+    padding: 20px 22px;
+    transform: scale(0.98);
+    opacity: 0;
+    transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 240ms ease-in-out;
+}
+.confirm-modal.show { transform: scale(1); opacity: 1; }
+.confirm-modal.hide { transform: scale(0.96); opacity: 0; }
+
+.confirm-modal h2 { margin: 0 0 8px; }
+.confirm-modal p { margin: 0 0 14px; color: #333; }
+
+.confirm-msg { margin-bottom: 12px; padding: 10px 12px; border-radius: 6px; background: #fff6f6; color: #7a1a1a; border: 1px solid #ffd6d6; }
+
+.confirm-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.btn-danger { background: #c62828; color: #fff; border: none; padding: 9px 14px; border-radius: 6px; font-weight:600; cursor: pointer; }
+.btn-danger[disabled] { opacity: 0.7; cursor: default; }
+.btn-cancel { background: transparent; border: 1px solid #ddd; padding: 9px 12px; border-radius: 6px; cursor: pointer; }
+
+/* ============================================================================
+   ENLACES ESPECIALES
+   ============================================================================ */
+.register-link,
+.login-link {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    color: var(--text-secondary);
+}
+
+.register-link a,
+.login-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link a:hover,
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================================================
+   TIPOGRAFÍA
+   ============================================================================ */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* ============================================================================
+   UTILIDADES
+   ============================================================================ */
+.loading {
+    text-align: center;
+    color: white;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: var(--spacing-lg);
+}
+
+.mb-20 {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .container.panel-container {
+        margin: var(--spacing-lg) auto;
+    }
+    
+    table {
+        font-size: 14px;
+    }
+    
+    table th,
+    table td {
+        padding: 8px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .navbar {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .navbar h1 {
+        font-size: 20px;
+    }
+    
+    .login-container,
+    .registro-container {
+        padding: var(--spacing-lg);
+    }
+    
+    .content-box {
+        padding: var(--spacing-xxl) var(--spacing-lg);
+    }
+    
+    .btn-group {
+        flex-direction: column;
+    }
+    
+    .btn-group .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar h1 {
+        font-size: 18px;
+    }
+    
+    .content-box h2 {
+        font-size: 24px;
+    }
+    
+    .content-box p {
+        font-size: 16px;
+    }
+}

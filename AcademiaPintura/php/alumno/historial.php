@@ -6,8 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 $id_usuario = $_SESSION['usuario'] ?? null;
-
-$cursos = [];
+$historial = [];
 if ($id_usuario) {
     try {
         $conexion = getConexionPDO();
@@ -16,17 +15,18 @@ if ($id_usuario) {
         $stmt->execute([$id_usuario]);
         $id_alumno = $stmt->fetchColumn();
         if ($id_alumno) {
-            // Obtener asignaturas en las que está matriculado actualmente
-            $sql = 'SELECT a.nombre_asignatura, m.fecha_matricula, m.calificacion
+            // Obtener historial académico (todas las matrículas del alumno)
+            $sql = 'SELECT a.nombre_asignatura, m.fecha_matricula, m.calificacion, m.fecha_inicio_curso, m.fecha_fin_curso
                     FROM matricula m
                     JOIN asignaturas a ON m.id_asignatura = a.id_asignatura
-                    WHERE m.id_alumno = ?';
+                    WHERE m.id_alumno = ?
+                    ORDER BY m.fecha_matricula DESC';
             $stmt = $conexion->prepare($sql);
             $stmt->execute([$id_alumno]);
-            $cursos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $historial = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     } catch (Exception $e) {
-        $error = 'Error al obtener los cursos: ' . $e->getMessage();
+        $error = 'Error al obtener el historial académico: ' . $e->getMessage();
     }
 }
 ?>
@@ -34,34 +34,38 @@ if ($id_usuario) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mis cursos - Alumno</title>
+    <title>Historial académico - Alumno</title>
     <link rel="stylesheet" href="../../css/estilos_unificados.css">
 </head>
 <body>
 <?php include '../panel/panel.php'; ?>
 <div class="container">
     <div class="welcome">
-        <h2>Mis cursos</h2>
+        <h2>Historial académico</h2>
         <?php if (!empty($error)): ?>
             <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
-        <?php if (empty($cursos)): ?>
-            <p>No estás matriculado en ningún curso actualmente.</p>
+        <?php if (empty($historial)): ?>
+            <p>No hay historial académico disponible.</p>
         <?php else: ?>
         <table>
             <thead>
                 <tr>
                     <th>Asignatura</th>
                     <th>Fecha de matrícula</th>
-                    <th>Calificación (si hay)</th>
+                    <th>Calificación</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($cursos as $curso): ?>
+                <?php foreach ($historial as $item): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($curso['nombre_asignatura']); ?></td>
-                    <td><?php echo htmlspecialchars($curso['fecha_matricula']); ?></td>
-                    <td><?php echo $curso['calificacion'] !== null ? htmlspecialchars($curso['calificacion']) : '-'; ?></td>
+                    <td><?php echo htmlspecialchars($item['nombre_asignatura']); ?></td>
+                    <td><?php echo htmlspecialchars($item['fecha_matricula']); ?></td>
+                    <td><?php echo $item['calificacion'] !== null ? htmlspecialchars($item['calificacion']) : '-'; ?></td>
+                    <td><?php echo htmlspecialchars($item['fecha_inicio_curso']); ?></td>
+                    <td><?php echo htmlspecialchars($item['fecha_fin_curso']); ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
