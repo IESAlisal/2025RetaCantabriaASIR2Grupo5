@@ -50,7 +50,7 @@ if ($id_usuario) {
         <?php else: ?>
         <table>
             <thead>
-                <tr>
+                <tr>º
                     <th>Asignatura</th>
                     <th>Fecha de matrícula</th>
                     <th>Calificación (si hay)</th>
