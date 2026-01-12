@@ -43,8 +43,7 @@ Hugo avanzó en la automatización de la infraestructura cloud, desarrollando un
 Hugo y Pool finalizaron la estructura en AWS, implementando autoscaling, un balanceador de carga y la configuración de servicios HTTPS. En paralelo, Lucas, junto con Dani, desarrollaron la nueva estructura para el panel de registro en PHP y avanzaron en el examen iAw. Por su parte, Dani también contribuyó a la nueva estructura de PHP y a ajustes en la arquitectura de AWS.
 
 ## Dia 15 19/12/2025
-Todos estuvimos editando y realizando pruebas en php, además de en Wordpress.
-Reunión de grupo.
+Tanto Pool como yo estuvimos editando y realizando pruebas en php, además de en Wordpress.
 
 ## Dia 16 22/12/2025
 Hugo estuvo realizando Documentación (entre otras este archivo), acabe de crear y comprobar que nuestra red en AWS es completamente funcional y correcta.
