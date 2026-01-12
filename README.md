@@ -60,3 +60,4 @@ Hugo estuvo realizando y arreglando códigos php de la página web, al igual que
 ## Día 20 09/01/2026
 Hugo y Pool continuaron haciendo y arreglando código php, y realizando pruebas en la web.
  
+## Día 21 12/01/2026
