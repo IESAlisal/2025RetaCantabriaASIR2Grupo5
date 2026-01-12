@@ -52,7 +52,8 @@ Hugo estuvo realizando Documentación (entre otras este archivo), acabe de crear
 El Grupo 5 no asistió ese día a clase.
 
 ## Día 18 07/01/2026
-
+Dani y Pool: Reorganizaron/reestructuraron parte del proyecto y continuaron realizando código.
+ 
 ## Día 19 08/01/2026
 Hugo estuvo realizando y arreglando códigos php de la página web, al igual que Daniel; Pool se encargo de realizr el Wordpress
 
