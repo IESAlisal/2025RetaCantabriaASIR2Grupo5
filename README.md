@@ -64,3 +64,6 @@ Hugo y Pool continuaron haciendo y arreglando código php, y realizando pruebas 
  
 ## Día 21 12/01/2026
 Hugo y Pool realizaron el apartado de AWS, balanceador de carga, grupos de destino, auto scaling, grupos de seguridad, DNS, etc mientras Lucas estuvo terminando la página de WordPress y la exportación de la misma.
+
+## Día 22 13/01/2026
+
