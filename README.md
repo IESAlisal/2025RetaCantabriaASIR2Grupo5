@@ -54,4 +54,4 @@ El Grupo 5 no asistió ese día a clase.
 ## DIA 18 07/01/2026
 
 ## DIA 19 08/01/2026
-Hugo estuvoealizando y arreglando códigos php de la página web, al igual que Daniel; Pool se encargo de realizr el Wordpress
+Hugo estuvo realizando y arreglando códigos php de la página web, al igual que Daniel; Pool se encargo de realizr el Wordpress
