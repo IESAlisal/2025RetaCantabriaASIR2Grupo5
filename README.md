@@ -1,5 +1,7 @@
 # **2025 - RetaCantabria - ASIR2 - Grupo5**
 
+
+
 ## Día 1 01/12/2025
 En este dia estuvimos decidiendo los reles de cada persona, firmando los compromisos y leyendo y analizando la presentación del reto
 
@@ -61,3 +63,4 @@ Hugo estuvo realizando y arreglando códigos php de la página web; Pool se enca
 Hugo y Pool continuaron haciendo y arreglando código php, y realizando pruebas en la web.
  
 ## Día 21 12/01/2026
+SUBIDO A AWS
