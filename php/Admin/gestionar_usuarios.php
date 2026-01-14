@@ -33,7 +33,7 @@ try {
 if (isset($_GET['msg'])) {
     $msg = htmlspecialchars($_GET['msg']);
     $tipo = isset($_GET['tipo']) && $_GET['tipo'] === 'success' ? 'success-msg' : 'error-msg';
-    echo '<div class="container"><div class="' . $tipo . '" style="display:block; margin-top:20px;">' . $msg . '</div></div>';
+    echo '<div class="container"><div class="' . $tipo . ' mt-2">' . $msg . '</div></div>';
 }
 ?>
 

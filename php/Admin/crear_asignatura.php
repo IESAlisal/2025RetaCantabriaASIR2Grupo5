@@ -253,7 +253,7 @@ try {
                         Limpiar formulario
                     </button>
                     <button type="submit" class="btn btn-primary">
-                        <span style="margin-right: 8px;">✅</span>
+                        <span class="icon-margin">✅</span>
                         Crear asignatura
                     </button>
                 </div>

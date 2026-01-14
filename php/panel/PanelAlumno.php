@@ -9,10 +9,9 @@ requireRole(['ALUMNO']);
     <p>Acciones disponibles:</p>
     <div class="dropdown">
         <details>
-            <summary>Cursos</summary>
+            <summary>Asignaturas</summary>
             <ul>
-                <li><a href="../alumno/mis_cursos.php">Mis cursos</a></li>
-                <li><a href="../alumno/matricula.php">Inscribirme / Anular matrícula</a></li>
+                <li><a href="../alumno/ver_mis_asignaturas.php">Ver Mis Asignaturas</a></li> 
             </ul>
         </details>
 

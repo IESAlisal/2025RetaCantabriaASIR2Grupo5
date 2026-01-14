@@ -1,4 +1,7 @@
 <?php
+// Inicia sesión para almacenar mensajes
+session_start();
+
 // ============================================================================
 // ARCHIVO: php/registro/procesar_registro.php
 // DESCRIPCIÓN: Procesa el formulario de registro y crea nuevo usuario
@@ -92,9 +95,15 @@ if (!empty($errores)) {
     // implode() convierte array a string
     $msg = implode(" | ", $errores);
     
-    // Redirecciona al formulario con mensaje y tipo error
-    // urlencode() convierte espacios y caracteres en URL-safe
-    header("Location: registro.php?msg=" . urlencode($msg) . "&tipo=error");
+    // Almacena el mensaje en sesión
+    $_SESSION['registro_msg'] = "❌ " . $msg;
+    $_SESSION['registro_tipo'] = 'error';
+    
+    // Guarda la sesión antes de redirigir
+    session_write_close();
+    
+    // Redirecciona al formulario
+    header("Location: registro.php");
     exit();
 }
 
@@ -110,13 +119,25 @@ $resultado = registroUsuario($usuario, $contrasena, $nombre, $apellido, $correo,
 // ===== VERIFICAR RESULTADO =====
 // Si el registro fue exitoso
 if ($resultado['success']) {
-    // Redirecciona al listado de usuarios del admin con mensaje de éxito
-    // Importante: desde php/Admin/registro/ debemos subir DOS niveles para llegar a php/admin/usuarios.php
-    header("Location: ../../admin/registro/registro.php?msg=" . urlencode("Usuario creado correctamente.") . "&tipo=success");
+    // Almacena el mensaje en sesión
+    $_SESSION['registro_msg'] = "✅ Usuario creado correctamente.";
+    $_SESSION['registro_tipo'] = 'success';
+    
+    // Guarda la sesión antes de redirigir
+    session_write_close();
+    
+    // Redirecciona al formulario de registro
+    header("Location: registro.php");
     exit();
 } else {
-    // Si falló, redirecciona al formulario con error
-    header("Location: registro.php?msg=" . urlencode($resultado['msg']) . "&tipo=error");
+    // Si falló, almacena el error en sesión y redirecciona
+    $_SESSION['registro_msg'] = $resultado['msg'];
+    $_SESSION['registro_tipo'] = 'error';
+    
+    // Guarda la sesión antes de redirigir
+    session_write_close();
+    
+    header("Location: registro.php");
     exit();
 }
 ?>

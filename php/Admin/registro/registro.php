@@ -1,4 +1,17 @@
 <?php
+// Inicia sesión para acceder a variables de sesión
+session_start();
+
+// Guarda el mensaje si existe
+$mensaje_registro = null;
+$tipo_mensaje = null;
+if (isset($_SESSION['registro_msg'])) {
+    $mensaje_registro = htmlspecialchars($_SESSION['registro_msg']);
+    $tipo_mensaje = isset($_SESSION['registro_tipo']) ? $_SESSION['registro_tipo'] : 'error';
+    unset($_SESSION['registro_msg']);
+    unset($_SESSION['registro_tipo']);
+}
+
 // Acceso restringido: solamente ADMIN puede acceder a este formulario
 require_once "../../../funciones/funciones.php";
 requireRole(['ADMIN']);
@@ -13,22 +26,16 @@ requireRole(['ADMIN']);
     <link rel="stylesheet" href="../../../css/estilos_unificados.css">
     <!-- Estilos personalizados eliminados, ahora en el CSS unificado -->
 </head>
-<body>
+<body class="centered-layout">
     <!-- Contenedor principal del formulario de registro -->
     <div class="registro-container">
         <h1>Registro - Academia de Pintura</h1>
         
         <?php
-            // Verifica si existe un parámetro 'msg' en la URL (mensaje de error o éxito)
-            if (isset($_GET['msg'])) {
-                // Sanitiza el mensaje para evitar inyección de HTML
-                $msg = htmlspecialchars($_GET['msg']);
-                // Verifica el tipo de mensaje (success o error)
-                $tipo = isset($_GET['tipo']) && $_GET['tipo'] === 'success' ? 'success' : 'error';
-                // Asigna la clase CSS correspondiente
-                $clase = $tipo === 'success' ? 'success-msg' : 'error-msg';
-                // Muestra el mensaje con display:block para hacerlo visible
-                echo '<div class="' . $clase . '" style="display: block;">' . $msg . '</div>';
+            // Muestra el mensaje si existe (guardado antes de requireRole)
+            if ($mensaje_registro !== null) {
+                $clase = $tipo_mensaje === 'success' ? 'success-msg' : 'error-msg';
+                echo '<div class="' . $clase . '">' . $mensaje_registro . '</div>';
             }
         ?>
         
@@ -91,7 +98,7 @@ requireRole(['ADMIN']);
             <!-- Botón para enviar el formulario de registro -->
             <button type="submit" class="registro-btn" name="registro">Registrarse</button>
             <br><br>
-            <div style="text-align: center;">
+            <div class="text-center">
     <a class="registro-btn" href="../../panel/panel.php">Salir</a>
 </div>
         </form>

@@ -19,7 +19,7 @@ if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
                 <h3>🔒 Backup del Sitio</h3>
                 <input type="password" name="pass" placeholder="Contraseña" required>
                 <input type="submit" name="login" value="Acceder">
-                <a href="../panel/panel.php" class="btn-salir" style="display:inline-block;margin-top:10px;padding:8px 16px;background:#764ba2;color:#fff;text-decoration:none;border-radius:4px;">Salir al menú principal</a>
+                <a href="../panel/panel.php" class="btn-salir">Salir al menú principal</a>
               </form>';
         exit;
     }
@@ -56,7 +56,7 @@ echo '<p><a href="?type=json">📁 Exportar BD + Info (JSON)</a></p>';
 if ($CONFIG['allow_files']) {
     echo '<p><a href="?type=zip">🗂️ Exportar Todo (ZIP)</a></p>';
 }
-echo '<p><a href="?type=logout" style="color:red;">🚪 Salir</a></p>';
+echo '<p><a href="?type=logout" class="logout-link">🚪 Salir</a></p>';
 echo '</body></html>';
 exit;
 

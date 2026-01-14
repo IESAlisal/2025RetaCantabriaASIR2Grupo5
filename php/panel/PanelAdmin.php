@@ -6,7 +6,7 @@ requireRole(['ADMIN']);
 
 <div class="welcome">
     <h2>Panel de Administración</h2>
-    <p>Acciones disponibles:</p>
+    <p><b>Acciones disponibles:</b></p>
     <div class="dropdown">
         <details>
             <summary>Usuarios</summary>

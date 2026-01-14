@@ -124,7 +124,7 @@ if ($editar_id) {
 
             <div class="form-buttons">
                 <button type="submit" class="btn-guardar">Guardar Cambios</button>
-                <a href="gestionar_aulas.php" class="btn-cancelar" style="text-decoration: none; text-align: center;">Cancelar</a>
+                <a href="gestionar_aulas.php" class="btn-cancelar btn-link">Cancelar</a>
             </div>
         </form>
     </div>
@@ -174,7 +174,7 @@ if ($editar_id) {
                 </div>
                 <div class="aula-actions">
                     <a href="gestionar_aulas.php?editar=<?php echo $aul['id_aula']; ?>" class="btn btn-editar">Editar</a>
-                    <form method="POST" style="display:inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta aula?');">
+                    <form method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta aula?');">
                         <input type="hidden" name="id_aula" value="<?php echo $aul['id_aula']; ?>">
                         <input type="hidden" name="eliminar_aula" value="1">
                         <button type="submit" class="btn btn-eliminar">Eliminar</button>

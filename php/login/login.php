@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../css/estilos_unificados.css">
     <!-- Estilos personalizados eliminados, ahora en el CSS unificado -->
 </head>
-<body>
+<body class="centered-layout">
     <!-- Contenedor principal del formulario de login -->
     <div class="login-container">
         <h1>Academia de Pintura</h1>
@@ -22,8 +22,8 @@
                 $tipo = isset($_GET['tipo']) && $_GET['tipo'] === 'success' ? 'success' : 'error';
                 // Asigna la clase CSS correspondiente
                 $clase = $tipo === 'success' ? 'success-msg' : 'error-msg';
-                // Muestra el mensaje con display:block para hacerlo visible
-                echo '<div class="' . $clase . '" style="display: block;">' . $msg . '</div>';
+                // Muestra el mensaje para hacerlo visible
+                echo '<div class="' . $clase . '">' . $msg . '</div>';
             }
         ?>
         

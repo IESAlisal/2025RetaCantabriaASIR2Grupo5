@@ -19,8 +19,15 @@ requireRole(['PROFESOR']);
             <summary>Evaluaciones</summary>
             <ul>
                 <li><a href="../profesor/introducir_calificaciones.php">Introducir calificaciones</a></li>
-                <li><a href="../profesor/listados.php">Listados de grupos</a></li>
+            </ul>      
+        </details>
+        <details>
+            <summary>Matricula</summary>
+            <ul>
+                <li><a href="../profesor/matricular_alumno.php">Matricular Alumnos</a></li>
+                <li><a href="../profesor/alumnos_matriculados.php">Ver Alumnos Matriculados</a></li>
             </ul>
         </details>
+
     </div>
 </div>

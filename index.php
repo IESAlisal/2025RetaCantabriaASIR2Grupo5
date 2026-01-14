@@ -64,7 +64,7 @@ if ($bbdd == 0 || $bbdd == 1) {
     </div>
     
     <div class="container">
-        <div id="loading" class="loading" style="display: none;">
+        <div id="loading" class="loading hidden">
             <h2>Inicializando sistema...</h2>
             <p>Preparando la base de datos.</p>
         </div>
