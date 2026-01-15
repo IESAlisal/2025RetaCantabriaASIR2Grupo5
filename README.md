@@ -67,3 +67,6 @@ Hugo y Pool configuraron componentes avanzados de AWS incluyendo balanceador de 
 Daniel y Hugo identificaron la necesidad de un cambio en la configuración AWS que requirió rehacer gran parte de la implementación, tarea que completaron al final del día. Pool corrigió y mejoró código PHP, mientras Lucas finalizó los detalles de WordPress, dejándolo listo para despliegue en AWS.
 
 ## Día 23 - 14/01/2026
+Mientras Hugo y Dani se encargaban de la creación y configuración de la instancia EC2 en AWS para alojar WordPress, incluyendo tareas como el volcado de la base de datos y el ajuste de la accesibilidad desde internet —aunque aún con algunos problemas por resolver—, en paralelo, Pool dedicaba su tiempo a dar los últimos retoques en los archivos PHP. Al mismo tiempo, Lucas trabajaba en los ajustes finales dentro del propio WordPress, preparando todo el contenido y la funcionalidad antes de proceder a subir el sitio a la nueva infraestructura.
+
+## Día 24 - 15/01/2026
