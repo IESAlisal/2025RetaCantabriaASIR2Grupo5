@@ -15,11 +15,12 @@ if ($id_usuario) {
         $stmt->execute([$id_usuario]);
         $id_alumno = $stmt->fetchColumn();
         if ($id_alumno) {
-            // Obtener calificaciones de asignaturas actuales (matriculado)
-            $sql = 'SELECT a.nombre_asignatura, m.calificacion
+            // Obtener calificaciones de asignaturas matriculado o completadas
+            $sql = 'SELECT a.nombre_asignatura, m.calificacion, m.estado, m.fecha_inicio_curso, m.fecha_fin_curso
                     FROM matricula m
                     JOIN asignaturas a ON m.id_asignatura = a.id_asignatura
-                    WHERE m.id_alumno = ?';
+                    WHERE m.id_alumno = ? AND m.estado IN ("Activa", "Completada")
+                    ORDER BY m.fecha_inicio_curso DESC';
             $stmt = $conexion->prepare($sql);
             $stmt->execute([$id_alumno]);
             $calificaciones = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -52,13 +53,15 @@ if ($id_usuario) {
                 <tr>
                     <th>Asignatura</th>
                     <th>Calificación</th>
+                    <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($calificaciones as $item): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($item['nombre_asignatura']); ?></td>
-                    <td><?php echo $item['calificacion'] !== null ? htmlspecialchars($item['calificacion']) : '-'; ?></td>
+                    <td><?php echo $item['calificacion'] !== null ? htmlspecialchars($item['calificacion']) : 'Pendiente'; ?></td>
+                    <td><?php echo htmlspecialchars($item['estado']); ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

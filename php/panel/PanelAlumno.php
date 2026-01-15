@@ -14,13 +14,5 @@ requireRole(['ALUMNO']);
                 <li><a href="../alumno/ver_mis_asignaturas.php">Ver Mis Asignaturas</a></li> 
             </ul>
         </details>
-
-        <details>
-            <summary>Resultados</summary>
-            <ul>
-                <li><a href="../alumno/calificaciones.php">Ver calificaciones</a></li>
-                <li><a href="../alumno/historial.php">Historial académico</a></li>
-            </ul>
-        </details>
     </div>
 </div>

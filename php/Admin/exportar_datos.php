@@ -15,19 +15,41 @@ $CONFIG = [
 // ========= AUTENTICACIÓN =========
 if (!isset($_SESSION['auth']) || $_SESSION['auth'] !== true) {
     if (!isset($_POST['login'])) {
-        echo '<form method="post">
-                <h3>🔒 Backup del Sitio</h3>
-                <input type="password" name="pass" placeholder="Contraseña" required>
-                <input type="submit" name="login" value="Acceder">
-                <a href="../panel/panel.php" class="btn-salir">Salir al menú principal</a>
-              </form>';
+        echo '<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exportar datos - Academia de Pintura</title>
+    <link rel="stylesheet" href="../../css/estilos_unificados.css">
+</head>
+<body>
+<div class="container">
+    <div class="panel-centered">
+        <div class="welcome" style="max-width: 400px; margin: 0 auto;">
+            <h2>🔒 Exportador de Datos</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label for="pass">Contraseña de acceso:</label>
+                    <input type="password" id="pass" name="pass" placeholder="Ingresa la contraseña" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" name="login" class="btn btn-guardar" value="1">Acceder</button>
+                    <a href="../panel/panel.php" class="btn btn-cancelar btn-link">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>';
         exit;
     }
     
     if ($_POST['pass'] === $CONFIG['password']) {
         $_SESSION['auth'] = true;
     } else {
-        die('Contraseña incorrecta');
+        die('<div style="text-align: center; padding: 50px;"><h2 style="color: #f5365c;">❌ Contraseña incorrecta</h2><a href="?" class="btn btn-guardar">Reintentar</a></div>');
     }
 }
 
@@ -46,17 +68,20 @@ echo '<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exportar datos - Academia de Pintura</title>
     <link rel="stylesheet" href="../../css/estilos_unificados.css">
 </head>
 <body>';
-echo '<h2>📦 Exportador del Sitio</h2>';
-echo '<p><a href="?type=sql">📊 Exportar Base de Datos (SQL)</a></p>';
-echo '<p><a href="?type=json">📁 Exportar BD + Info (JSON)</a></p>';
-if ($CONFIG['allow_files']) {
-    echo '<p><a href="?type=zip">🗂️ Exportar Todo (ZIP)</a></p>';
-}
-echo '<p><a href="?type=logout" class="logout-link">🚪 Salir</a></p>';
+echo '<div class="navbar"><h1>📦 Exportador de Datos</h1><a href="?type=logout" class="btn btn-cancelar" style="color: white; text-decoration: none;">🚪 Salir</a></div>';
+echo '<div class="container"><div class="welcome" style="max-width: 600px; margin: 0 auto;">';
+echo '<h2>Opciones de Exportación</h2>';
+echo '<p style="margin-bottom: 20px; color: var(--text-secondary);">Selecciona qué deseas exportar:</p>';
+echo '<div style="display: grid; gap: 12px;">';
+echo '<a href="?type=sql" class="btn btn-guardar" style="display: block; text-align: center; padding: 15px; text-decoration: none; color: white;">📊 Exportar Base de Datos (SQL)</a>';
+echo '<a href="?type=json" class="btn btn-guardar" style="display: block; text-align: center; padding: 15px; text-decoration: none; color: white;">📁 Exportar BD + Info (JSON)</a>';
+echo '</div>';
+echo '</div></div>';
 echo '</body></html>';
 exit;
 
@@ -134,13 +159,17 @@ function exportJSON() {
 
 function exportZIP() {
     global $CONFIG;
-    if (!class_exists('ZipArchive')) die('ZIP no disponible');
+    if (!class_exists('ZipArchive')) {
+        echo '<div style="text-align: center; padding: 50px;"><h2 style="color: #f5365c;">❌ Función no disponible</h2><p>La extensión ZIP de PHP no está instalada en el servidor.</p><a href="?" class="btn btn-guardar">Volver</a></div>';
+        exit;
+    }
     
     $zip = new ZipArchive();
     $filename = 'full_backup_' . date('Ymd_His') . '.zip';
     
     if ($zip->open($filename, ZipArchive::CREATE) !== true) {
-        die('Error creando ZIP');
+        echo '<div style="text-align: center; padding: 50px;"><h2 style="color: #f5365c;">❌ Error creando ZIP</h2><p>No se pudo crear el archivo ZIP.</p><a href="?" class="btn btn-guardar">Volver</a></div>';
+        exit;
     }
     
     // Base de datos

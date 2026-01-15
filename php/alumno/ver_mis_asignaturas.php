@@ -93,14 +93,16 @@ $matriculas = $stmt_matriculas;
             <?php if ($matriculas->rowCount() > 0): ?>
             <table class="table">
                 <thead>
+                    
                     <tr>
-                        <th>Asignatura</th>
-                        <th>Código</th>
-                        <th>Profesor</th>
-                        <th>Periodo</th>
-                        <th>Estado</th>
-                        <th>Calificación</th>
+                        <th style="color: black;">Asignatura</th>
+                        <th style="color: black;">Código</th>
+                         <th style="color: black;">Profesor</th>
+                         <th style="color: black;">Periodo</th>
+                         <th style="color: black;">Estado</th>
+                         <th style="color: black;">Calificación</th>
                     </tr>
+                
                 </thead>
                 <tbody>
                     <?php while($matricula = $matriculas->fetch(PDO::FETCH_ASSOC)): 

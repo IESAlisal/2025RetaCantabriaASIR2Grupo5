@@ -13,18 +13,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editar_aula'])) {
     $equipamiento = $_POST['equipamiento'];
     $estado = $_POST['estado'];
     
-    $sql = "UPDATE `aulas` SET 
-            `codigo_aula` = ?, 
-            `capacidad` = ?, 
-            `piso` = ?, 
-            `equipamiento` = ?, 
-            `estado` = ? 
-            WHERE `id_aula` = ?";
-    
-    $stmt = $conexion->prepare($sql);
-    $stmt->execute([$codigo_aula, $capacidad, $piso, $equipamiento, $estado, $id_aula]);
-    
-    $mensaje = "Aula actualizada correctamente.";
+    // Validar formato del código de aula: AULA-A-XXX
+    if (!preg_match('/^AULA-A-\d{3}$/', $codigo_aula)) {
+        $error = "El código del aula no cumple con las condiciones necesarias. Formato: AULA-A-XXX (XXX = números)";
+    }
+    // Validar capacidad entre 1 y 50
+    elseif ($capacidad < 1 || $capacidad > 50) {
+        $error = "La capacidad no cumple con las condiciones necesarias. Debe estar entre 1 y 50 alumnos.";
+    }
+    // Validar piso entre 1 y 10
+    elseif ($piso && ($piso < 1 || $piso > 10)) {
+        $error = "El piso no cumple con las condiciones necesarias. Debe estar entre 1 y 10.";
+    }
+    else {
+        $sql = "UPDATE `aulas` SET 
+                `codigo_aula` = ?, 
+                `capacidad` = ?, 
+                `piso` = ?, 
+                `equipamiento` = ?, 
+                `estado` = ? 
+                WHERE `id_aula` = ?";
+        
+        $stmt = $conexion->prepare($sql);
+        $stmt->execute([$codigo_aula, $capacidad, $piso, $equipamiento, $estado, $id_aula]);
+        
+        $mensaje = "Aula actualizada correctamente.";
+    }
 }
 
 // Procesar eliminación de aula
@@ -84,6 +98,10 @@ if ($editar_id) {
 
     <?php if (isset($mensaje)): ?>
         <div class="mensaje"><?php echo $mensaje; ?></div>
+    <?php endif; ?>
+
+    <?php if (isset($error)): ?>
+        <div class="error"><?php echo $error; ?></div>
     <?php endif; ?>
 
     <?php if ($aula_editar): ?>
