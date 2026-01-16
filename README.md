@@ -73,3 +73,4 @@ Mientras Hugo y Dani se encargaban de la creación y configuración de la instan
 Hugo, Dani y Pool se dedicaron a la realización de documentación mientras,Lucas se encargo de subir la versión definitiva del WordPress en AWS.
 
 ## Día 25 - 16/01/2026
+Todos los integrantes se dedicarón a la realización de la documentación final.
